@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		3656181328920235009CFD8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656181228920235009CFD8D /* AppDelegate.swift */; };
 		3656181528920235009CFD8D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656181428920235009CFD8D /* SceneDelegate.swift */; };
-		3656181728920235009CFD8D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656181628920235009CFD8D /* ViewController.swift */; };
 		3656181C28920237009CFD8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3656181B28920237009CFD8D /* Assets.xcassets */; };
 		3656182828920438009CFD8D /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182628920438009CFD8D /* InitialViewController.swift */; };
-		3656182928920438009CFD8D /* InitialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3656182728920438009CFD8D /* InitialViewController.xib */; };
+		3656182C28920CC0009CFD8D /* TextRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182B28920CC0009CFD8D /* TextRow.swift */; };
+		3656182E28920D30009CFD8D /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182D28920D30009CFD8D /* Label.swift */; };
 		40BD36E63261EAA7B16AA0C4 /* Pods_TriviaWithEpoxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */; };
 /* End PBXBuildFile section */
 
@@ -20,11 +20,11 @@
 		3656180F28920235009CFD8D /* TriviaWithEpoxy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TriviaWithEpoxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3656181228920235009CFD8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3656181428920235009CFD8D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3656181628920235009CFD8D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3656181B28920237009CFD8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3656182028920237009CFD8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3656182628920438009CFD8D /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
-		3656182728920438009CFD8D /* InitialViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialViewController.xib; sourceTree = "<group>"; };
+		3656182B28920CC0009CFD8D /* TextRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRow.swift; sourceTree = "<group>"; };
+		3656182D28920D30009CFD8D /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		3AB2EF69A716BD424FDFFB3E /* Pods-TriviaWithEpoxy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.debug.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.debug.xcconfig"; sourceTree = "<group>"; };
 		8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TriviaWithEpoxy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95880F7D9A951D8892AA212C /* Pods-TriviaWithEpoxy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.release.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.release.xcconfig"; sourceTree = "<group>"; };
@@ -48,7 +48,6 @@
 				3AB2EF69A716BD424FDFFB3E /* Pods-TriviaWithEpoxy.debug.xcconfig */,
 				95880F7D9A951D8892AA212C /* Pods-TriviaWithEpoxy.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -73,15 +72,31 @@
 		3656181128920235009CFD8D /* TriviaWithEpoxy */ = {
 			isa = PBXGroup;
 			children = (
+				3656182A28920CAA009CFD8D /* Views */,
 				3656181228920235009CFD8D /* AppDelegate.swift */,
 				3656181428920235009CFD8D /* SceneDelegate.swift */,
-				3656181628920235009CFD8D /* ViewController.swift */,
 				3656181B28920237009CFD8D /* Assets.xcassets */,
 				3656182028920237009CFD8D /* Info.plist */,
 				3656182628920438009CFD8D /* InitialViewController.swift */,
-				3656182728920438009CFD8D /* InitialViewController.xib */,
 			);
 			path = TriviaWithEpoxy;
+			sourceTree = "<group>";
+		};
+		3656182A28920CAA009CFD8D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3656182F28920D39009CFD8D /* Elements */,
+				3656182B28920CC0009CFD8D /* TextRow.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3656182F28920D39009CFD8D /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				3656182D28920D30009CFD8D /* Label.swift */,
+			);
+			path = Elements;
 			sourceTree = "<group>";
 		};
 		BAEA98694592B823E0A90EBF /* Frameworks */ = {
@@ -153,7 +168,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3656181C28920237009CFD8D /* Assets.xcassets in Resources */,
-				3656182928920438009CFD8D /* InitialViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +220,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3656181728920235009CFD8D /* ViewController.swift in Sources */,
+				3656182C28920CC0009CFD8D /* TextRow.swift in Sources */,
+				3656182E28920D30009CFD8D /* Label.swift in Sources */,
 				3656181328920235009CFD8D /* AppDelegate.swift in Sources */,
 				3656181528920235009CFD8D /* SceneDelegate.swift in Sources */,
 				3656182828920438009CFD8D /* InitialViewController.swift in Sources */,

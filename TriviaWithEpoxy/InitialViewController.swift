@@ -8,16 +8,6 @@
 import UIKit
 import Epoxy
 
-//class InitialViewController: UIViewController {
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        // Do any additional setup after loading the view.
-//    }
-//
-//}
-
 class InitialViewController: CollectionViewController {
   init() {
     let layout = UICollectionViewCompositionalLayout
