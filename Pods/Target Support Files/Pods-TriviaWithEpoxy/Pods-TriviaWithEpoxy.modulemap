@@ -1,0 +1,6 @@
+framework module Pods_TriviaWithEpoxy {
+  umbrella header "Pods-TriviaWithEpoxy-umbrella.h"
+
+  export *
+  module * { export * }
+}

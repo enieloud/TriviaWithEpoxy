@@ -1,0 +1,45 @@
+PODS:
+  - Epoxy (0.7.0):
+    - EpoxyBars (= 0.7.0)
+    - EpoxyCollectionView (= 0.7.0)
+    - EpoxyCore (= 0.7.0)
+    - EpoxyLayoutGroups (= 0.7.0)
+    - EpoxyNavigationController (= 0.7.0)
+    - EpoxyPresentations (= 0.7.0)
+  - EpoxyBars (0.7.0):
+    - EpoxyCore (= 0.7.0)
+  - EpoxyCollectionView (0.7.0):
+    - EpoxyCore (= 0.7.0)
+  - EpoxyCore (0.7.0)
+  - EpoxyLayoutGroups (0.7.0):
+    - EpoxyCore (= 0.7.0)
+  - EpoxyNavigationController (0.7.0):
+    - EpoxyCore (= 0.7.0)
+  - EpoxyPresentations (0.7.0):
+    - EpoxyCore (= 0.7.0)
+
+DEPENDENCIES:
+  - Epoxy
+
+SPEC REPOS:
+  trunk:
+    - Epoxy
+    - EpoxyBars
+    - EpoxyCollectionView
+    - EpoxyCore
+    - EpoxyLayoutGroups
+    - EpoxyNavigationController
+    - EpoxyPresentations
+
+SPEC CHECKSUMS:
+  Epoxy: 9655ef705607d1e63074416e350fdc5e0f325501
+  EpoxyBars: 320b3834a624a137d64933a41755ce4ec7bba474
+  EpoxyCollectionView: cab2066f2e031fca89d5373078d9e7fa2c767858
+  EpoxyCore: 7478304fc707a67583fda3cb98e6e631f5e13d40
+  EpoxyLayoutGroups: 8adbddfd610fd03161253236b3826fb1aa332a11
+  EpoxyNavigationController: db7b4dc85f40008195b0a5994a2e48568e251928
+  EpoxyPresentations: c0975084c28a7d2c0eb112c6645ba49db3ec8e00
+
+PODFILE CHECKSUM: f67be69098af51484fe84bc6f1e67aecd804288a
+
+COCOAPODS: 1.11.3
