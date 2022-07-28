@@ -13,6 +13,8 @@
 		3656182828920438009CFD8D /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182628920438009CFD8D /* InitialViewController.swift */; };
 		3656182C28920CC0009CFD8D /* TextRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182B28920CC0009CFD8D /* TextRow.swift */; };
 		3656182E28920D30009CFD8D /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182D28920D30009CFD8D /* Label.swift */; };
+		365618322892E609009CFD8D /* NavigationWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365618312892E609009CFD8D /* NavigationWrapperViewController.swift */; };
+		365618342892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365618332892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift */; };
 		40BD36E63261EAA7B16AA0C4 /* Pods_TriviaWithEpoxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +27,8 @@
 		3656182628920438009CFD8D /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		3656182B28920CC0009CFD8D /* TextRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRow.swift; sourceTree = "<group>"; };
 		3656182D28920D30009CFD8D /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		365618312892E609009CFD8D /* NavigationWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationWrapperViewController.swift; sourceTree = "<group>"; };
+		365618332892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCompositionalLayout+List.swift"; sourceTree = "<group>"; };
 		3AB2EF69A716BD424FDFFB3E /* Pods-TriviaWithEpoxy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.debug.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.debug.xcconfig"; sourceTree = "<group>"; };
 		8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TriviaWithEpoxy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95880F7D9A951D8892AA212C /* Pods-TriviaWithEpoxy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.release.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.release.xcconfig"; sourceTree = "<group>"; };
@@ -72,6 +76,8 @@
 		3656181128920235009CFD8D /* TriviaWithEpoxy */ = {
 			isa = PBXGroup;
 			children = (
+				365618352892E854009CFD8D /* Extensions */,
+				365618302892E5F7009CFD8D /* Helpers */,
 				3656182A28920CAA009CFD8D /* Views */,
 				3656181228920235009CFD8D /* AppDelegate.swift */,
 				3656181428920235009CFD8D /* SceneDelegate.swift */,
@@ -97,6 +103,22 @@
 				3656182D28920D30009CFD8D /* Label.swift */,
 			);
 			path = Elements;
+			sourceTree = "<group>";
+		};
+		365618302892E5F7009CFD8D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				365618312892E609009CFD8D /* NavigationWrapperViewController.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		365618352892E854009CFD8D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				365618332892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		BAEA98694592B823E0A90EBF /* Frameworks */ = {
@@ -222,9 +244,11 @@
 			files = (
 				3656182C28920CC0009CFD8D /* TextRow.swift in Sources */,
 				3656182E28920D30009CFD8D /* Label.swift in Sources */,
+				365618322892E609009CFD8D /* NavigationWrapperViewController.swift in Sources */,
 				3656181328920235009CFD8D /* AppDelegate.swift in Sources */,
 				3656181528920235009CFD8D /* SceneDelegate.swift in Sources */,
 				3656182828920438009CFD8D /* InitialViewController.swift in Sources */,
+				365618342892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
