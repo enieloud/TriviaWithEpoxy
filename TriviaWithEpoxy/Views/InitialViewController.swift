@@ -8,7 +8,8 @@
 import UIKit
 import Epoxy
 
-let categories = ["General Knowledge", "Entertainment: Books", "Entertainment: Films"]
+//let categories = ["General Knowledge", "Entertainment: Books", "Entertainment: Films"]
+var categories: TriviaCategories?
 
 struct DifficultyLevel: Hashable {
     static let list = ["Easy", "Medium", "Hard"]
@@ -44,12 +45,21 @@ class InitialViewController: NavigationController {
     
     init() {
         super.init(wrapNavigation: NavigationWrapperViewController.init(navigationController:))
-        setStack(stack, animated: false)
+        readTriviaCategories() { [weak self] categs in
+            if let self = self, let categs = categs {
+                categories = categs
+                DispatchQueue.main.async {
+                    self.setStack(self.stack, animated: false)
+                }
+            }
+        }
     }
     
     @NavigationModelBuilder private var stack: [NavigationModel] {
-        NavigationModel.root(dataID: DataID.category) { [weak self] in
-            self?.createCategoriesViewController()
+        if let categories = categories {
+            NavigationModel.root(dataID: DataID.category) { [weak self] in
+                self?.createCategoriesViewController(categories: categories)
+            }
         }
         if let selectDifficulty = state.selectDifficulty {
             NavigationModel(
@@ -63,14 +73,14 @@ class InitialViewController: NavigationController {
         }
     }
     
-    private func createCategoriesViewController() -> UIViewController {
+    private func createCategoriesViewController(categories: TriviaCategories) -> UIViewController {
         let viewController = CollectionViewController(
             layout: UICollectionViewCompositionalLayout.list,
             items: {
-                categories.map { category in
+                categories.triviaCategories.map { category in
                     TextRow.itemModel(
-                        dataID: category,
-                        content: .init(title: category, body: category),
+                        dataID: category.id,
+                        content: .init(title: category.name, body: category.name),
                         style: .small)
                     .didSelect { [weak self] _ in
                         self?.state.selectDifficulty = DifficultyLevel(difficultyID: 1)

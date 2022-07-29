@@ -15,6 +15,10 @@
 		3656182E28920D30009CFD8D /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182D28920D30009CFD8D /* Label.swift */; };
 		365618322892E609009CFD8D /* NavigationWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365618312892E609009CFD8D /* NavigationWrapperViewController.swift */; };
 		365618342892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365618332892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift */; };
+		3656183928942DFD009CFD8D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656183828942DFD009CFD8D /* Game.swift */; };
+		3656183B28942E30009CFD8D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656183A28942E30009CFD8D /* Model.swift */; };
+		3656183D28942E5F009CFD8D /* Readers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656183C28942E5F009CFD8D /* Readers.swift */; };
+		3656184028942EBA009CFD8D /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656183F28942EBA009CFD8D /* String+Extensions.swift */; };
 		40BD36E63261EAA7B16AA0C4 /* Pods_TriviaWithEpoxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +33,10 @@
 		3656182D28920D30009CFD8D /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		365618312892E609009CFD8D /* NavigationWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationWrapperViewController.swift; sourceTree = "<group>"; };
 		365618332892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCompositionalLayout+List.swift"; sourceTree = "<group>"; };
+		3656183828942DFD009CFD8D /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		3656183A28942E30009CFD8D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		3656183C28942E5F009CFD8D /* Readers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Readers.swift; sourceTree = "<group>"; };
+		3656183F28942EBA009CFD8D /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		3AB2EF69A716BD424FDFFB3E /* Pods-TriviaWithEpoxy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.debug.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.debug.xcconfig"; sourceTree = "<group>"; };
 		8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TriviaWithEpoxy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95880F7D9A951D8892AA212C /* Pods-TriviaWithEpoxy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.release.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.release.xcconfig"; sourceTree = "<group>"; };
@@ -76,14 +84,14 @@
 		3656181128920235009CFD8D /* TriviaWithEpoxy */ = {
 			isa = PBXGroup;
 			children = (
-				365618352892E854009CFD8D /* Extensions */,
-				365618302892E5F7009CFD8D /* Helpers */,
+				3656183E28942EA4009CFD8D /* Extensions */,
+				3656183628942DA7009CFD8D /* Infra */,
+				3656183728942DDA009CFD8D /* Model */,
 				3656182A28920CAA009CFD8D /* Views */,
 				3656181228920235009CFD8D /* AppDelegate.swift */,
 				3656181428920235009CFD8D /* SceneDelegate.swift */,
 				3656181B28920237009CFD8D /* Assets.xcassets */,
 				3656182028920237009CFD8D /* Info.plist */,
-				3656182628920438009CFD8D /* InitialViewController.swift */,
 			);
 			path = TriviaWithEpoxy;
 			sourceTree = "<group>";
@@ -91,8 +99,10 @@
 		3656182A28920CAA009CFD8D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				365618352892E854009CFD8D /* Extensions */,
+				365618302892E5F7009CFD8D /* Helpers */,
 				3656182F28920D39009CFD8D /* Elements */,
-				3656182B28920CC0009CFD8D /* TextRow.swift */,
+				3656182628920438009CFD8D /* InitialViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -101,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				3656182D28920D30009CFD8D /* Label.swift */,
+				3656182B28920CC0009CFD8D /* TextRow.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -117,6 +128,31 @@
 			isa = PBXGroup;
 			children = (
 				365618332892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3656183628942DA7009CFD8D /* Infra */ = {
+			isa = PBXGroup;
+			children = (
+				3656183C28942E5F009CFD8D /* Readers.swift */,
+			);
+			path = Infra;
+			sourceTree = "<group>";
+		};
+		3656183728942DDA009CFD8D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3656183828942DFD009CFD8D /* Game.swift */,
+				3656183A28942E30009CFD8D /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3656183E28942EA4009CFD8D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3656183F28942EBA009CFD8D /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -242,13 +278,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3656183B28942E30009CFD8D /* Model.swift in Sources */,
+				3656184028942EBA009CFD8D /* String+Extensions.swift in Sources */,
 				3656182C28920CC0009CFD8D /* TextRow.swift in Sources */,
 				3656182E28920D30009CFD8D /* Label.swift in Sources */,
 				365618322892E609009CFD8D /* NavigationWrapperViewController.swift in Sources */,
+				3656183D28942E5F009CFD8D /* Readers.swift in Sources */,
 				3656181328920235009CFD8D /* AppDelegate.swift in Sources */,
 				3656181528920235009CFD8D /* SceneDelegate.swift in Sources */,
 				3656182828920438009CFD8D /* InitialViewController.swift in Sources */,
 				365618342892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift in Sources */,
+				3656183928942DFD009CFD8D /* Game.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
