@@ -18,6 +18,7 @@
 		3656183B28942E30009CFD8D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656183A28942E30009CFD8D /* Model.swift */; };
 		3656183D28942E5F009CFD8D /* Readers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656183C28942E5F009CFD8D /* Readers.swift */; };
 		3656184028942EBA009CFD8D /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656183F28942EBA009CFD8D /* String+Extensions.swift */; };
+		3656184328946025009CFD8D /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184228946025009CFD8D /* CategoriesViewController.swift */; };
 		40BD36E63261EAA7B16AA0C4 /* Pods_TriviaWithEpoxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		3656183A28942E30009CFD8D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		3656183C28942E5F009CFD8D /* Readers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Readers.swift; sourceTree = "<group>"; };
 		3656183F28942EBA009CFD8D /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		3656184228946025009CFD8D /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		3AB2EF69A716BD424FDFFB3E /* Pods-TriviaWithEpoxy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.debug.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.debug.xcconfig"; sourceTree = "<group>"; };
 		8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TriviaWithEpoxy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95880F7D9A951D8892AA212C /* Pods-TriviaWithEpoxy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.release.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.release.xcconfig"; sourceTree = "<group>"; };
@@ -96,10 +98,10 @@
 		3656182A28920CAA009CFD8D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3656184128945FFF009CFD8D /* ViewControllers */,
 				365618352892E854009CFD8D /* Extensions */,
 				365618302892E5F7009CFD8D /* Helpers */,
 				3656182F28920D39009CFD8D /* Elements */,
-				3656182628920438009CFD8D /* InitialViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -152,6 +154,15 @@
 				3656183F28942EBA009CFD8D /* String+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3656184128945FFF009CFD8D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3656182628920438009CFD8D /* InitialViewController.swift */,
+				3656184228946025009CFD8D /* CategoriesViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		BAEA98694592B823E0A90EBF /* Frameworks */ = {
@@ -276,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3656183B28942E30009CFD8D /* Model.swift in Sources */,
+				3656184328946025009CFD8D /* CategoriesViewController.swift in Sources */,
 				3656184028942EBA009CFD8D /* String+Extensions.swift in Sources */,
 				3656182C28920CC0009CFD8D /* TextRow.swift in Sources */,
 				3656182E28920D30009CFD8D /* Label.swift in Sources */,

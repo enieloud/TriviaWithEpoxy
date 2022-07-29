@@ -49,7 +49,8 @@ class InitialViewController: NavigationController {
     
     @NavigationModelBuilder private var stack: [NavigationModel] {
         NavigationModel.root(dataID: DataID.category) { [weak self] in
-            self?.createCategoriesViewController(categories: self!.categories)
+            guard let self = self else { return nil }
+            return self.createCategoriesViewController(categories: self.categories)
         }
         if let selectDifficulty = state.selectDifficulty {
             NavigationModel(
@@ -64,21 +65,9 @@ class InitialViewController: NavigationController {
     }
     
     private func createCategoriesViewController(categories: TriviaCategories) -> UIViewController {
-        let viewController = CollectionViewController(
-            layout: UICollectionViewCompositionalLayout.list,
-            items: {
-                categories.triviaCategories.map { category in
-                    TextRow.itemModel(
-                        dataID: category.id,
-                        content: .init(title: category.name, body: category.name),
-                        style: .small)
-                    .didSelect { [weak self] _ in
-                        self?.state.selectDifficulty = DifficultyLevel(difficultyID: 1)
-                    }
-                }
-            })
-        viewController.title = "Select Category"
-        return viewController
+        return CategoriesViewController(categories: categories) { [weak self] in
+            self?.state.selectDifficulty = DifficultyLevel(difficultyID: 1)
+        }
     }
     
     private func createSelectDifficulty() -> UIViewController {
