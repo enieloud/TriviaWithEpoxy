@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3656181328920235009CFD8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656181228920235009CFD8D /* AppDelegate.swift */; };
-		3656181528920235009CFD8D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656181428920235009CFD8D /* SceneDelegate.swift */; };
 		3656181C28920237009CFD8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3656181B28920237009CFD8D /* Assets.xcassets */; };
 		3656182828920438009CFD8D /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182628920438009CFD8D /* InitialViewController.swift */; };
 		3656182C28920CC0009CFD8D /* TextRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182B28920CC0009CFD8D /* TextRow.swift */; };
@@ -25,7 +24,6 @@
 /* Begin PBXFileReference section */
 		3656180F28920235009CFD8D /* TriviaWithEpoxy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TriviaWithEpoxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3656181228920235009CFD8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3656181428920235009CFD8D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3656181B28920237009CFD8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3656182028920237009CFD8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3656182628920438009CFD8D /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
@@ -89,7 +87,6 @@
 				3656183728942DDA009CFD8D /* Model */,
 				3656182A28920CAA009CFD8D /* Views */,
 				3656181228920235009CFD8D /* AppDelegate.swift */,
-				3656181428920235009CFD8D /* SceneDelegate.swift */,
 				3656181B28920237009CFD8D /* Assets.xcassets */,
 				3656182028920237009CFD8D /* Info.plist */,
 			);
@@ -285,7 +282,6 @@
 				365618322892E609009CFD8D /* NavigationWrapperViewController.swift in Sources */,
 				3656183D28942E5F009CFD8D /* Readers.swift in Sources */,
 				3656181328920235009CFD8D /* AppDelegate.swift in Sources */,
-				3656181528920235009CFD8D /* SceneDelegate.swift in Sources */,
 				3656182828920438009CFD8D /* InitialViewController.swift in Sources */,
 				365618342892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift in Sources */,
 				3656183928942DFD009CFD8D /* Game.swift in Sources */,

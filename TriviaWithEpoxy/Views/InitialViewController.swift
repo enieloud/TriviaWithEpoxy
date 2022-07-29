@@ -8,9 +8,6 @@
 import UIKit
 import Epoxy
 
-//let categories = ["General Knowledge", "Entertainment: Books", "Entertainment: Films"]
-var categories: TriviaCategories?
-
 struct DifficultyLevel: Hashable {
     static let list = ["Easy", "Medium", "Hard"]
     var difficultyID: Int
@@ -27,6 +24,7 @@ struct DifficultyLevel: Hashable {
 }
 
 class InitialViewController: NavigationController {
+    private let categories: TriviaCategories
     
     private enum DataID: Hashable {
         case category
@@ -43,23 +41,15 @@ class InitialViewController: NavigationController {
         }
     }
     
-    init() {
+    init(categories: TriviaCategories) {
+        self.categories = categories
         super.init(wrapNavigation: NavigationWrapperViewController.init(navigationController:))
-        readTriviaCategories() { [weak self] categs in
-            if let self = self, let categs = categs {
-                categories = categs
-                DispatchQueue.main.async {
-                    self.setStack(self.stack, animated: false)
-                }
-            }
-        }
+        self.setStack(self.stack, animated: false)
     }
     
     @NavigationModelBuilder private var stack: [NavigationModel] {
-        if let categories = categories {
-            NavigationModel.root(dataID: DataID.category) { [weak self] in
-                self?.createCategoriesViewController(categories: categories)
-            }
+        NavigationModel.root(dataID: DataID.category) { [weak self] in
+            self?.createCategoriesViewController(categories: self!.categories)
         }
         if let selectDifficulty = state.selectDifficulty {
             NavigationModel(
