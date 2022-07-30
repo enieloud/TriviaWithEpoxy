@@ -19,6 +19,7 @@
 		3656183D28942E5F009CFD8D /* Readers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656183C28942E5F009CFD8D /* Readers.swift */; };
 		3656184028942EBA009CFD8D /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656183F28942EBA009CFD8D /* String+Extensions.swift */; };
 		3656184328946025009CFD8D /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184228946025009CFD8D /* CategoriesViewController.swift */; };
+		3656184528946F69009CFD8D /* DifficultyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184428946F69009CFD8D /* DifficultyViewController.swift */; };
 		40BD36E63261EAA7B16AA0C4 /* Pods_TriviaWithEpoxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		3656183C28942E5F009CFD8D /* Readers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Readers.swift; sourceTree = "<group>"; };
 		3656183F28942EBA009CFD8D /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		3656184228946025009CFD8D /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		3656184428946F69009CFD8D /* DifficultyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyViewController.swift; sourceTree = "<group>"; };
 		3AB2EF69A716BD424FDFFB3E /* Pods-TriviaWithEpoxy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.debug.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.debug.xcconfig"; sourceTree = "<group>"; };
 		8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TriviaWithEpoxy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95880F7D9A951D8892AA212C /* Pods-TriviaWithEpoxy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.release.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.release.xcconfig"; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			children = (
 				3656182628920438009CFD8D /* InitialViewController.swift */,
 				3656184228946025009CFD8D /* CategoriesViewController.swift */,
+				3656184428946F69009CFD8D /* DifficultyViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				3656182E28920D30009CFD8D /* Label.swift in Sources */,
 				365618322892E609009CFD8D /* NavigationWrapperViewController.swift in Sources */,
 				3656183D28942E5F009CFD8D /* Readers.swift in Sources */,
+				3656184528946F69009CFD8D /* DifficultyViewController.swift in Sources */,
 				3656181328920235009CFD8D /* AppDelegate.swift in Sources */,
 				3656182828920438009CFD8D /* InitialViewController.swift in Sources */,
 				365618342892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift in Sources */,

@@ -8,31 +8,16 @@
 import UIKit
 import Epoxy
 
-struct DifficultyLevel: Hashable {
-    static let list = ["Easy", "Medium", "Hard"]
-    var difficultyID: Int
-    var text: String {
-        get {
-            switch difficultyID {
-            case 1: return "Easy"
-            case 2: return "Medium"
-            case 3: return "Hard"
-            default: return "Easy"
-            }
-        }
-    }
-}
-
 class InitialViewController: NavigationController {
     private let categories: TriviaCategories
     
     private enum DataID: Hashable {
         case category
-        case difficulty(DifficultyLevel)
+        case difficulty(Difficulty)
     }
     
     private struct State {
-        var selectDifficulty: DifficultyLevel?
+        var selectDifficulty: Difficulty?
     }
     
     private var state = State() {
@@ -66,25 +51,11 @@ class InitialViewController: NavigationController {
     
     private func createCategoriesViewController(categories: TriviaCategories) -> UIViewController {
         return CategoriesViewController(categories: categories) { [weak self] in
-            self?.state.selectDifficulty = DifficultyLevel(difficultyID: 1)
+            self?.state.selectDifficulty = Difficulty.easy
         }
     }
     
     private func createSelectDifficulty() -> UIViewController {
-        let viewController = CollectionViewController(
-            layout: UICollectionViewCompositionalLayout.list,
-            items: {
-                DifficultyLevel.list.map { d in
-                    TextRow.itemModel(
-                        dataID: d,
-                        content: .init(title: d, body: d),
-                        style: .small)
-                    .didSelect { [weak self] _ in
-                        //self?.state.showExample = example
-                    }
-                }
-            })
-        viewController.title = "Select Category"
-        return viewController
+        return DifficultyViewController() { /* empty block */ }
     }
 }
