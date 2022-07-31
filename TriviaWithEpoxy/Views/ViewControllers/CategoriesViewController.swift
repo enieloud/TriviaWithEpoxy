@@ -12,9 +12,9 @@ import UIKit
 class CategoriesViewController: CollectionViewController {
     
     private let categories: TriviaCategories
-    private let onSelect: ()->Void
+    private let onSelect: (Int)->Void
     
-    init(categories: TriviaCategories, onSelect: @escaping ()->Void) {
+    init(categories: TriviaCategories, onSelect: @escaping (Int)->Void) {
         self.onSelect = onSelect
         self.categories = categories
         super.init(layout: UICollectionViewCompositionalLayout.list)
@@ -29,8 +29,7 @@ class CategoriesViewController: CollectionViewController {
                 content: .init(title: category.name, body: category.name),
                 style: .small)
             .didSelect { [weak self] _ in
-                self?.onSelect()
-                //self?.state.selectDifficulty = DifficultyLevel(difficultyID: 1)
+                self?.onSelect(category.id)
             }
         }
     }

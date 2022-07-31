@@ -8,12 +8,11 @@
 import Epoxy
 import UIKit
 
-/// Source code for `EpoxyCollectionView` "Counter" example from `README.md`:
 class DifficultyViewController: CollectionViewController {
     
-    private let onSelect: ()->Void
+    private let onSelect: (Difficulty)->Void
     
-    init(onSelect: @escaping ()->Void) {
+    init(onSelect: @escaping (Difficulty)->Void) {
         self.onSelect = onSelect
         super.init(layout: UICollectionViewCompositionalLayout.list)
         title = "Select Difficulty"
@@ -28,8 +27,7 @@ class DifficultyViewController: CollectionViewController {
                 content: .init(title: difficulty.description(), body: difficulty.description()),
                 style: .small)
             .didSelect { [weak self] _ in
-                self?.onSelect()
-                //self?.state.selectDifficulty = DifficultyLevel(difficultyID: 1)
+                self?.onSelect(difficulty)
             }
         }
     }

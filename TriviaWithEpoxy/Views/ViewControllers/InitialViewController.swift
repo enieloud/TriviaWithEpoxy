@@ -9,15 +9,20 @@ import UIKit
 import Epoxy
 
 class InitialViewController: NavigationController {
-    private let categories: TriviaCategories
     
-    private enum DataID: Hashable {
-        case category
-        case difficulty(Difficulty)
+    var categories: TriviaCategories
+    
+    private enum NavPage: Hashable {
+        case selectingCategory
+        case selectingDifficulty//(Difficulty)
+        case selectingQuestionType//(QuestionType)
+        case playing
     }
     
     private struct State {
-        var selectDifficulty: Difficulty?
+        var difficulty: Difficulty?
+        var type: QuestionType?
+        var page = NavPage.selectingCategory
     }
     
     private var state = State() {
@@ -33,29 +38,62 @@ class InitialViewController: NavigationController {
     }
     
     @NavigationModelBuilder private var stack: [NavigationModel] {
-        NavigationModel.root(dataID: DataID.category) { [weak self] in
+        NavigationModel.root(dataID: NavPage.selectingCategory) { [weak self] in
             guard let self = self else { return nil }
-            return self.createCategoriesViewController(categories: self.categories)
+            return self.createCategoriesViewController()
         }
-        if let selectDifficulty = state.selectDifficulty {
+        if state.page == .selectingDifficulty {
             NavigationModel(
-                dataID: DataID.difficulty(selectDifficulty),
+                dataID: NavPage.selectingDifficulty,
                 makeViewController: { [weak self] in
                     self?.createSelectDifficulty()
                 },
                 remove: { [weak self] in
-                    self?.state.selectDifficulty = nil
+                    print("remove de selectingDifficulty")
+                })
+        }
+        if state.page == .selectingQuestionType {
+            NavigationModel(
+                dataID: NavPage.selectingQuestionType,
+                makeViewController: { [weak self] in
+                    self?.createSelectQuestionType()
+                },
+                remove: { [weak self] in
+                    print("remove de selectingQuestionType")
                 })
         }
     }
     
-    private func createCategoriesViewController(categories: TriviaCategories) -> UIViewController {
-        return CategoriesViewController(categories: categories) { [weak self] in
-            self?.state.selectDifficulty = Difficulty.easy
+    private func createCategoriesViewController() -> UIViewController {
+        return CategoriesViewController(categories: categories) { [weak self] categoryId in
+            if let self = self {
+                var newState = self.state
+                self.categories.currentCategoryId = categoryId
+                newState.page = .selectingDifficulty
+                self.state = newState
+            }
+        }
+    }
+    
+    private func createSelectQuestionType() -> UIViewController {
+        return QuestionTypeViewController() { [weak self] questionType in
+            if let self = self {
+                var newState = self.state
+                newState.type = questionType
+                newState.page = .playing
+                self.state = newState
+            }
         }
     }
     
     private func createSelectDifficulty() -> UIViewController {
-        return DifficultyViewController() { /* empty block */ }
+        return DifficultyViewController() { [weak self] difficulty in
+            if let self = self {
+                var newState = self.state
+                newState.difficulty = difficulty
+                newState.page = .selectingQuestionType
+                self.state = newState
+            }
+        }
     }
 }
