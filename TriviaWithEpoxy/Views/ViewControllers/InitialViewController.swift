@@ -14,18 +14,18 @@ class InitialViewController: NavigationController {
     
     private enum NavPage: Hashable {
         case selectingCategory
-        case selectingDifficulty//(Difficulty)
-        case selectingQuestionType//(QuestionType)
+        case selectingDifficulty
+        case selectingQuestionType
         case playing
     }
     
     private struct State {
-        var difficulty: Difficulty?
-        var type: QuestionType?
+        var gameInfo: GameInfo
+        var game: Game?
         var page = NavPage.selectingCategory
     }
     
-    private var state = State() {
+    private var state: State {
         didSet {
             setStack(stack, animated: true)
         }
@@ -33,6 +33,7 @@ class InitialViewController: NavigationController {
     
     init(categories: TriviaCategories) {
         self.categories = categories
+        self.state = State(gameInfo: GameInfo(categories: categories))
         super.init(wrapNavigation: NavigationWrapperViewController.init(navigationController:))
         self.setStack(self.stack, animated: false)
     }
@@ -62,13 +63,25 @@ class InitialViewController: NavigationController {
                     print("remove de selectingQuestionType")
                 })
         }
+        if state.page == .playing {
+            NavigationModel(
+                dataID: NavPage.playing,
+                makeViewController: { [weak self] in
+                    if let self = self {
+                        return QuestionViewController(game: self.state.game!)
+                    } else { return nil }
+                },
+                remove: { [weak self] in
+                    print("remove de playing")
+                })
+        }
     }
     
     private func createCategoriesViewController() -> UIViewController {
         return CategoriesViewController(categories: categories) { [weak self] categoryId in
             if let self = self {
                 var newState = self.state
-                self.categories.currentCategoryId = categoryId
+                newState.gameInfo.categoryId = categoryId
                 newState.page = .selectingDifficulty
                 self.state = newState
             }
@@ -78,10 +91,20 @@ class InitialViewController: NavigationController {
     private func createSelectQuestionType() -> UIViewController {
         return QuestionTypeViewController() { [weak self] questionType in
             if let self = self {
-                var newState = self.state
-                newState.type = questionType
-                newState.page = .playing
-                self.state = newState
+                var newGameInfo = self.state.gameInfo
+                newGameInfo.type = questionType
+                newGameInfo.amount = 10
+                Game.createGame(gameInfo: newGameInfo) { game in
+                    if let game = game {
+                        var newState = self.state
+                        newState.page = .playing
+                        newState.game = game
+                        newState.gameInfo = newGameInfo
+                        DispatchQueue.main.async {
+                            self.state = newState
+                        }
+                    }
+                }
             }
         }
     }
@@ -90,7 +113,7 @@ class InitialViewController: NavigationController {
         return DifficultyViewController() { [weak self] difficulty in
             if let self = self {
                 var newState = self.state
-                newState.difficulty = difficulty
+                newState.gameInfo.difficulty = difficulty
                 newState.page = .selectingQuestionType
                 self.state = newState
             }

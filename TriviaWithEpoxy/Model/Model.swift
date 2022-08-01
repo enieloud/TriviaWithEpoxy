@@ -3,12 +3,11 @@ import Foundation
 // MARK: - Categories
 struct TriviaCategories: Codable {
     let triviaCategories: [TriviaCategory]
-    var currentCategoryId: Int = 0
     
-    func currentName() -> String {
-        triviaCategories.first { $0.id == currentCategoryId }?.name ?? ""
+    func getName(categId: Int) -> String {
+        triviaCategories.first { $0.id == categId }?.name ?? ""
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case triviaCategories = "trivia_categories"
     }

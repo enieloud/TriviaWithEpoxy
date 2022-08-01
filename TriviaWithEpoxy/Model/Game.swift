@@ -9,10 +9,24 @@ import Foundation
 
 // MARK: - GameInfo
 struct GameInfo {
-    var categories: TriviaCategories?
-    var difficulty: Difficulty = .easy
-    var type: QuestionType = .boolean
-    var amount: Int = 10
+    let categories: TriviaCategories
+    var categoryId: Int?
+    var difficulty: Difficulty?
+    var type: QuestionType?
+    var amount: Int?
+    
+    func description(_ short: Bool) -> String {
+        var categName = ""
+        if let categId = categoryId {
+            categName = categories.getName(categId: categId)
+        }
+        let difficulty = difficulty?.description() ?? ""
+        if short {
+            return "\(categName), \(difficulty)"
+        }
+        let questionType = type?.description() ?? ""
+        return "\(categName), \(difficulty), \(questionType)"
+    }
 }
 
 // MARK: - Game
@@ -118,10 +132,7 @@ struct Game {
         }
     }
     
-    func gameDescription() -> String {
-        let categName = gameInfo.categories?.currentName() ?? ""
-        let difficulty = gameInfo.difficulty.description()
-        let description = gameInfo.type.description()
-        return "\"\(categName)\", \n \"\(difficulty) level\", \n \"\(description)\"\n\n"
+    func description(short: Bool = false) -> String {
+        return gameInfo.description(short)
     }
 }

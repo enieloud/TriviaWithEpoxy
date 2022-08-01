@@ -19,7 +19,6 @@ class QuestionTypeViewController: CollectionViewController {
         setItems(items, animated: false)
     }
     
-    
     @ItemModelBuilder private var items: [ItemModeling] {
         QuestionType.allCases.map { questionType in
             TextRow.itemModel(

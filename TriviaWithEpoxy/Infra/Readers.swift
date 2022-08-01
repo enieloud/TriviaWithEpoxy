@@ -9,11 +9,15 @@ import Foundation
 
 func readGame(gameInfo: GameInfo, completion: @escaping (QuestionsAndAnswers?) -> Void)
 {
-    let amount = gameInfo.amount
-    let categId = gameInfo.categories?.currentCategoryId ?? 0
-    let difficulty = gameInfo.difficulty.rawValue
-    let type = gameInfo.type.rawValue
-    let urlStr = "https://opentdb.com/api.php?amount=\(amount)&category=\(categId)&difficulty=\(difficulty)&type=\(type)"
+    guard let amount = gameInfo.amount,
+          let categId = gameInfo.categoryId,
+          let difficulty = gameInfo.difficulty,
+          let type = gameInfo.type
+    else {
+        completion(nil)
+        return
+    }
+    let urlStr = "https://opentdb.com/api.php?amount=\(amount)&category=\(categId)&difficulty=\(difficulty.rawValue)&type=\(type.rawValue)"
     let url = URL(string: urlStr)!
     
     let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
