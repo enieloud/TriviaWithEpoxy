@@ -20,11 +20,9 @@ class LoadCategoriesViewController: UIViewController {
         readTriviaCategories() { [weak self] categs in
             self?.stopSpinnerView()
             if let self = self, let categs = categs {
-                DispatchQueue.main.async {
-                    let vc = InitialViewController(categories: categs)
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
-                }
+                let vc = InitialViewController(categories: categs)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
             }
         }
     }
@@ -37,9 +35,7 @@ class LoadCategoriesViewController: UIViewController {
     }
     
     func stopSpinnerView() {
-        DispatchQueue.main.async {
-            self.spinner.stopAnimating()
-        }
+        self.spinner.stopAnimating()
     }
     
     required init?(coder: NSCoder) {

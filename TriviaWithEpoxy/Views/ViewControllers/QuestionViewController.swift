@@ -67,24 +67,20 @@ final class QuestionViewController: CollectionViewController {
     }
     
     func stopSpinnerView() {
-        DispatchQueue.main.async {
-            self.spinner.stopAnimating()
-        }
+        self.spinner.stopAnimating()
     }
     
     func onGameCreated() {
         guard let game = game else {
             return
         }
-        DispatchQueue.main.async {
-            if game.possibleAnswers.count == 0 {
-                self.showText(title: "Error", message: "\(game.description(short: true))\nbrought no choices!")
-            } else {
-                self.topBarInstaller.install()
-                self.bottomBarInstaller.install()
-                self.createStateFromGame(answerChecked: false)
-                self.setItems(self.items, animated: false)
-            }
+        if game.possibleAnswers.count == 0 {
+            showText(title: "Error", message: "\(game.description(short: true))\nbrought no choices!")
+        } else {
+            topBarInstaller.install()
+            bottomBarInstaller.install()
+            createStateFromGame(answerChecked: false)
+            setItems(items, animated: false)
         }
     }
     

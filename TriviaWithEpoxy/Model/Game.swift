@@ -52,9 +52,13 @@ struct Game {
             (q: QuestionsAndAnswers?) in
             if let qa = q {
                 let game = Game(gameInfo: gameInfo, questionsAndAnswers: qa)
-                completion(game)
+                DispatchQueue.main.async {
+                    completion(game)
+                }
             } else {
-                completion(nil)
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             }
         }
     }

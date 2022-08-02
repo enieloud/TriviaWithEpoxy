@@ -46,9 +46,13 @@ func readTriviaCategories(completion: @escaping (TriviaCategories?) -> Void)
         }
         do {
             let triviaCategories = try JSONDecoder().decode(TriviaCategories.self, from: jsonData)
-            completion(triviaCategories)
+            DispatchQueue.main.async {
+                completion(triviaCategories)
+            }
         } catch {
-            completion(nil)
+            DispatchQueue.main.async {
+                completion(nil)
+            }
         }
     }
     task.resume()
