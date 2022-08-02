@@ -23,6 +23,15 @@ final class QuestionViewController: CollectionViewController {
         let currentQuestion: String
         let answerChecked: Bool
         let answerSelected: Bool
+        let message: String
+
+        func with(message: String)->State {
+            State(possibleAnswers: self.possibleAnswers,
+                  currentQuestion: self.currentQuestion,
+                  answerChecked: self.answerChecked,
+                  answerSelected: self.answerSelected,
+                  message: message)
+        }
     }
     
     private var state: State {
@@ -36,7 +45,7 @@ final class QuestionViewController: CollectionViewController {
     init(gameInfo: GameInfo) {
         let layout = UICollectionViewCompositionalLayout
             .list(using: .init(appearance: .plain))
-        self.state = State(possibleAnswers: [], currentQuestion: "", answerChecked: false, answerSelected: false)
+        state = State(possibleAnswers: [], currentQuestion: "", answerChecked: false, answerSelected: false, message: "")
         super.init(layout: layout)
         startSpinnerView()
         Game.createGame(gameInfo: gameInfo) { game in
@@ -110,7 +119,7 @@ final class QuestionViewController: CollectionViewController {
         let possibleAnswers = game.possibleAnswers.enumerated().map { (index, possibleAnswer) in
             AnswerItem(selected: false, text: possibleAnswer, answerID: getItemID(position: index))
         }
-        state = State(possibleAnswers: possibleAnswers, currentQuestion: game.questionStr, answerChecked: answerChecked, answerSelected: answerChecked)
+        state = State(possibleAnswers: possibleAnswers, currentQuestion: game.questionStr, answerChecked: answerChecked, answerSelected: answerChecked, message: "")
     }
     
     private func getItemID(position: Int) -> Int {
@@ -127,7 +136,7 @@ final class QuestionViewController: CollectionViewController {
                     selected: idx == indexFound,
                     text: item.text,
                     answerID: item.answerID) }
-            self.state = State(possibleAnswers: possibleAnswers, currentQuestion: state.currentQuestion, answerChecked: false, answerSelected: true)
+            self.state = State(possibleAnswers: possibleAnswers, currentQuestion: state.currentQuestion, answerChecked: false, answerSelected: true, message: "")
         }
     }
     
@@ -146,32 +155,33 @@ final class QuestionViewController: CollectionViewController {
     
     @BarModelBuilder
     var bottomBars: [BarModeling] {
+        Label.barModel(content: state.message, style: Label.Style.style(with: .body, textAlignment: .center))
         if game != nil {
             ButtonRow.barModel(
                 content: .init(text: self.state.answerChecked ? "Next Question" : "Check answer!"),
-                behaviors: .init(didTap: {
-                    if self.state.answerChecked {
-                        if self.game!.isFinihed() {
-                            self.showText(title: "Game finished", message: "Your final score is:\(self.game!.scoreStr)")
-                        } else {
-                            self.game!.next()
-                            self.createStateFromGame(answerChecked: false)
-                        }
-                    } else {
-                        if !self.state.answerSelected {
-                            self.showText(title: "Please select an answer", message: "")
-                        } else {
-                            if let indexFound = self.indexOfSelection() {
-                                if self.game!.evalAnswer(index: indexFound) {
-                                    self.showText(title: "Correct answer!", message: "")
-                                } else {
-                                    self.showText(title: "Oops...", message: "incorrect answer")
-                                }
-                                self.createStateFromGame(answerChecked: true)
-                            }
-                        }
-                    }
-                }))
+                behaviors: .init(didTap: { self.onBottomButtonTapped() })
+            )
+        }
+    }
+    
+    func onBottomButtonTapped() {
+        if state.answerChecked {
+            if game!.isFinihed() {
+                state = state.with(message: "Game finished. Your final score is:\(game!.scoreStr)")
+            } else {
+                game!.next()
+                self.createStateFromGame(answerChecked: false)
+            }
+        } else {
+            if !state.answerSelected {
+                state = state.with(message: "Please select an answer")
+            } else {
+                if let indexFound = self.indexOfSelection() {
+                    let answerWasCorrect = game!.evalAnswer(index: indexFound)
+                    self.createStateFromGame(answerChecked: true)
+                    state = state.with(message: answerWasCorrect ? "Correct answer!!!" : "Oops... incorrect answer!!!")
+                }
+            }
         }
     }
     

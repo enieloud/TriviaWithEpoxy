@@ -52,7 +52,7 @@ final class TextRow: UIView, EpoxyableView {
         Label.groupItem(
           dataID: DataID.title,
           content: title,
-          style: .style(with: titleStyle))
+          style: .style(with: titleStyle, textAlignment: .left))
           .adjustsFontForContentSizeCategory(true)
           .textColor(UIColor.label)
       }
@@ -60,7 +60,7 @@ final class TextRow: UIView, EpoxyableView {
         Label.groupItem(
           dataID: DataID.body,
           content: body,
-          style: .style(with: bodyStyle))
+          style: .style(with: bodyStyle, textAlignment: .left))
           .adjustsFontForContentSizeCategory(true)
           .numberOfLines(0)
           .textColor(UIColor.secondaryLabel)
