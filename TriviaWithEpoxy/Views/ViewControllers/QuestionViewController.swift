@@ -21,6 +21,7 @@ class QuestionViewController: CollectionViewController {
         let possibleAnswers: [AnswerItem]
         let currentQuestion: String
         let answerChecked: Bool
+        let answerSelected: Bool
     }
     
     private var state: State {
@@ -35,7 +36,7 @@ class QuestionViewController: CollectionViewController {
         let layout = UICollectionViewCompositionalLayout
             .list(using: .init(appearance: .plain))
         self.game = game
-        self.state = State(possibleAnswers: [], currentQuestion: "", answerChecked: false)
+        self.state = State(possibleAnswers: [], currentQuestion: "", answerChecked: false, answerSelected: false)
         super.init(layout: layout)
         createStateFromGame(answerChecked: false)
         setItems(items, animated: false)
@@ -76,7 +77,7 @@ class QuestionViewController: CollectionViewController {
         let possibleAnswers = game.possibleAnswers.enumerated().map { (index, possibleAnswer) in
             AnswerItem(selected: false, text: possibleAnswer, answerID: getItemID(position: index))
         }
-        state = State(possibleAnswers: possibleAnswers, currentQuestion: game.questionStr, answerChecked: answerChecked)
+        state = State(possibleAnswers: possibleAnswers, currentQuestion: game.questionStr, answerChecked: answerChecked, answerSelected: answerChecked)
     }
     
     private func getItemID(position: Int) -> Int {
@@ -90,7 +91,7 @@ class QuestionViewController: CollectionViewController {
                     selected: idx == indexFound,
                     text: item.text,
                     answerID: item.answerID) }
-            self.state = State(possibleAnswers: possibleAnswers, currentQuestion: state.currentQuestion, answerChecked: false)
+            self.state = State(possibleAnswers: possibleAnswers, currentQuestion: state.currentQuestion, answerChecked: false, answerSelected: true)
         }
     }
     
@@ -116,13 +117,17 @@ class QuestionViewController: CollectionViewController {
                     self.game.next()
                     self.createStateFromGame(answerChecked: false)
                 } else {
-                    if let indexFound = self.indexOfSelection() {
-                        if self.game.evalAnswer(index: indexFound) {
-                            self.showText(title: "Correct answer!", message: "")
-                        } else {
-                            self.showText(title: "Oops...", message: "incorrect answer")
+                    if !self.state.answerSelected {
+                        self.showText(title: "Please select an answer", message: "")
+                    } else {
+                        if let indexFound = self.indexOfSelection() {
+                            if self.game.evalAnswer(index: indexFound) {
+                                self.showText(title: "Correct answer!", message: "")
+                            } else {
+                                self.showText(title: "Oops...", message: "incorrect answer")
+                            }
+                            self.createStateFromGame(answerChecked: true)
                         }
-                        self.createStateFromGame(answerChecked: true)
                     }
                 }
             }))
