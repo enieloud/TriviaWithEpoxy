@@ -19,6 +19,7 @@ final class Label: UILabel, EpoxyableView {
             backgroundColor = .secondarySystemBackground
         }
         textAlignment = style.textAlignment
+        textColor = style.color
     }
     
     required init?(coder _: NSCoder) {
@@ -33,6 +34,7 @@ final class Label: UILabel, EpoxyableView {
         let font: UIFont
         let showLabelBackground: Bool
         let textAlignment: NSTextAlignment
+        let color: UIColor
         var numberOfLines = 0
     }
     
@@ -50,12 +52,14 @@ extension Label.Style {
     static func style(
         with textStyle: UIFont.TextStyle,
         showBackground: Bool = false,
-        textAlignment: NSTextAlignment)
+        textAlignment: NSTextAlignment,
+        color: UIColor)
     -> Label.Style
     {
         .init(
             font: UIFont.preferredFont(forTextStyle: textStyle),
             showLabelBackground: showBackground,
-            textAlignment: textAlignment)
+            textAlignment: textAlignment,
+            color: color)
     }
 }

@@ -130,7 +130,7 @@ final class QuestionViewController: CollectionViewController {
                     TextRow.itemModel(
                         dataID: answerItem.answerID,
                         content: .init(title: answerItem.text, body: nil),
-                        style: game.isCorrect(index: index) ? TextRow.Style.large : TextRow.Style.small)
+                        style: game.isCorrect(index: index) ? TextRow.Style.green : TextRow.Style.red)
                 }
             }
         }
@@ -175,7 +175,7 @@ final class QuestionViewController: CollectionViewController {
     
     @BarModelBuilder
     var bottomBars: [BarModeling] {
-        Label.barModel(content: state.message, style: .style(with: .body, textAlignment: .center))
+        Label.barModel(content: state.message, style: .style(with: .body, textAlignment: .center, color: .black))
         if let game = game {
             if !game.isFinihed() {
                 ButtonRow.barModel(
