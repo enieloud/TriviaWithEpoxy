@@ -65,8 +65,8 @@ struct Game {
                 self.possibleAnswers = ["true","false"]
                 self.possibleAnswers.shuffle()
             } else {
-                self.possibleAnswers = self.questionsAndAnswers.listOfQuestionsWithAnswers[self.currentStep].incorrectAnswers
-                self.possibleAnswers.append(self.questionsAndAnswers.listOfQuestionsWithAnswers[self.currentStep].correctAnswer)
+                self.possibleAnswers = self.questionsAndAnswers.listOfQuestionsWithAnswers[self.currentStep].incorrectAnswers.map { String(htmlEncodedString: $0) ?? "" }
+                self.possibleAnswers.append(String(htmlEncodedString:(self.questionsAndAnswers.listOfQuestionsWithAnswers[self.currentStep].correctAnswer) ) ?? "" )
                 self.possibleAnswers.shuffle()
             }
         } else {
