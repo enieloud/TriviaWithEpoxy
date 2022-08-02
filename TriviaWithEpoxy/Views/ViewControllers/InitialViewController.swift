@@ -92,7 +92,7 @@ final class InitialViewController: NavigationController {
             if let self = self {
                 var newGameInfo = self.state.gameInfo
                 newGameInfo.type = questionType
-                newGameInfo.amount = 10
+                newGameInfo.amount = 5
                 var newState = self.state
                 newState.page = .playing
                 newState.gameInfo = newGameInfo

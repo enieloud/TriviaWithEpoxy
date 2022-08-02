@@ -151,8 +151,12 @@ final class QuestionViewController: CollectionViewController {
                 content: .init(text: self.state.answerChecked ? "Next Question" : "Check answer!"),
                 behaviors: .init(didTap: {
                     if self.state.answerChecked {
-                        self.game!.next()
-                        self.createStateFromGame(answerChecked: false)
+                        if self.game!.isFinihed() {
+                            self.showText(title: "Game finished", message: "Your final score is:\(self.game!.scoreStr)")
+                        } else {
+                            self.game!.next()
+                            self.createStateFromGame(answerChecked: false)
+                        }
                     } else {
                         if !self.state.answerSelected {
                             self.showText(title: "Please select an answer", message: "")
