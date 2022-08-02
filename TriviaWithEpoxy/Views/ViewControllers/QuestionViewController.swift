@@ -32,6 +32,30 @@ final class QuestionViewController: CollectionViewController {
                   answerSelected: self.answerSelected,
                   message: message)
         }
+        
+        func with(possibleAnswers: [AnswerItem])->State {
+            State(possibleAnswers: possibleAnswers,
+                  currentQuestion: self.currentQuestion,
+                  answerChecked: self.answerChecked,
+                  answerSelected: self.answerSelected,
+                  message: self.message)
+        }
+        
+        func with(currentQuestion: String)->State {
+            State(possibleAnswers: self.possibleAnswers,
+                  currentQuestion: currentQuestion,
+                  answerChecked: self.answerChecked,
+                  answerSelected: self.answerSelected,
+                  message: self.message)
+        }
+        
+        func with(answerChecked: Bool)->State {
+            State(possibleAnswers: self.possibleAnswers,
+                  currentQuestion: self.currentQuestion,
+                  answerChecked: answerChecked,
+                  answerSelected: self.answerSelected,
+                  message: self.message)
+        }
     }
     
     private var state: State {
@@ -79,7 +103,11 @@ final class QuestionViewController: CollectionViewController {
         } else {
             topBarInstaller.install()
             bottomBarInstaller.install()
-            createStateFromGame(answerChecked: false)
+            state = State(possibleAnswers: mapPossibleAnswers(from: game),
+                          currentQuestion: game.questionStr,
+                          answerChecked: false,
+                          answerSelected: false,
+                          message: "")
             setItems(items, animated: false)
         }
     }
@@ -108,16 +136,12 @@ final class QuestionViewController: CollectionViewController {
         }
     }
     
-    private func createStateFromGame(answerChecked: Bool) {
-        guard let game = game else {
-            return
-        }
-        let possibleAnswers = game.possibleAnswers.enumerated().map { (index, possibleAnswer) in
+    private func mapPossibleAnswers(from game: Game) -> [AnswerItem] {
+        return game.possibleAnswers.enumerated().map { (index, possibleAnswer) in
             AnswerItem(selected: false, text: possibleAnswer, answerID: getItemID(position: index))
         }
-        state = State(possibleAnswers: possibleAnswers, currentQuestion: game.questionStr, answerChecked: answerChecked, answerSelected: answerChecked, message: "")
     }
-    
+
     private func getItemID(position: Int) -> Int {
         guard let game = game else {
             return 0
@@ -151,34 +175,65 @@ final class QuestionViewController: CollectionViewController {
     
     @BarModelBuilder
     var bottomBars: [BarModeling] {
-        Label.barModel(content: state.message, style: Label.Style.style(with: .body, textAlignment: .center))
-        if game != nil {
-            ButtonRow.barModel(
-                content: .init(text: self.state.answerChecked ? "Next Question" : "Check answer!"),
-                behaviors: .init(didTap: { self.onBottomButtonTapped() })
-            )
+        Label.barModel(content: state.message, style: .style(with: .body, textAlignment: .center))
+        if let game = game {
+            if !game.isFinihed() {
+                ButtonRow.barModel(
+                    content: .init(text: getButtonText(game: game) ),
+                    behaviors: .init(didTap: { self.onBottomButtonTapped() })
+                )
+            } else {
+                TextRow.barModel(content: TextRow.Content(title: nil, body: getButtonText(game: game)),
+                                 style: .large)
+            }
         }
     }
     
-    func onBottomButtonTapped() {
-        if state.answerChecked {
-            if game!.isFinihed() {
-                state = state.with(message: "Game finished. Your final score is:\(game!.scoreStr)")
+    func getButtonText(game: Game)->String {
+        if game.isFinihed() {
+            if state.answerChecked {
+                return "Game finished. Your final score is:\(game.scoreStr)"
             } else {
+                return "Check answer!"
+            }
+        } else {
+            if state.answerChecked {
+                return "Next Question"
+            } else {
+                return "Check answer!"
+            }
+
+        }
+    }
+
+    func onBottomButtonTapped() {
+        if game == nil {
+            return
+        }
+        var message = ""
+        var answerChecked = false
+        if state.answerChecked {
+            if !game!.isFinihed() {
                 game!.next()
-                self.createStateFromGame(answerChecked: false)
             }
         } else {
             if !state.answerSelected {
-                state = state.with(message: "Please select an answer")
+                message = "Please select an answer"
             } else {
                 if let indexFound = self.indexOfSelection() {
                     let answerWasCorrect = game!.evalAnswer(index: indexFound)
-                    self.createStateFromGame(answerChecked: true)
-                    state = state.with(message: answerWasCorrect ? "Correct answer!!!" : "Oops... incorrect answer!!!")
+                    answerChecked = true
+                    message = answerWasCorrect ? "Correct answer!!!" : "Oops... incorrect answer!!!"
                 }
             }
         }
+        // update the state
+        state = state
+            .with(possibleAnswers: mapPossibleAnswers(from: game!))
+            .with(currentQuestion: game!.questionStr)
+            .with(message: message)
+            .with(answerChecked: answerChecked)
+        
     }
     
     @BarModelBuilder

@@ -34,6 +34,7 @@ struct Game {
     
     private let gameInfo: GameInfo
     private var score: Int
+    private var answerChecked = false
     var currentStep: Int
     let questionsAndAnswers: QuestionsAndAnswers
     var possibleAnswers: [String]
@@ -79,13 +80,14 @@ struct Game {
     }
     
     func isFinihed() -> Bool {
-        currentStep == self.questionsAndAnswers.listOfQuestionsWithAnswers.count-1
+        (currentStep == self.questionsAndAnswers.listOfQuestionsWithAnswers.count-1) && answerChecked
     }
     
     mutating func next() {
         assert(!isFinihed());
         currentStep += 1
         setupPossibleAnswers()
+        answerChecked = false
     }
     
     func isCorrect(index: Int) -> Bool {
@@ -100,6 +102,7 @@ struct Game {
         if correctAnswer {
             score+=1
         }
+        answerChecked = true
         return correctAnswer
     }
     
