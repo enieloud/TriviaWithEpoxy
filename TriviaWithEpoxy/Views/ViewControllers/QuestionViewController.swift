@@ -135,8 +135,8 @@ class QuestionViewController: CollectionViewController {
     
     @BarModelBuilder
     var topBars: [BarModeling] {
-        TextRow.barModel(content: TextRow.Content(title: game.description(), body: nil), style: TextRow.Style.small)
-        TextRow.barModel(content: TextRow.Content(title: nil, body: state.currentQuestion), style: TextRow.Style.large)
+        TextRow.barModel(content: TextRow.Content(title: game.description(), body: game.scoreStr), style: TextRow.Style.small)
+        TextRow.barModel(content: TextRow.Content(title: game.currentStepStr, body: state.currentQuestion), style: TextRow.Style.large)
     }
     
     func showText(title: String, message: String) {

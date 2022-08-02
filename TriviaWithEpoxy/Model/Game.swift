@@ -108,7 +108,8 @@ struct Game {
     
     var scoreStr: String {
         get {
-            return "\(score) pts"
+            let totalSteps = questionsAndAnswers.listOfQuestionsWithAnswers.count
+            return "\(score) pts of \(totalSteps)"
         }
     }
     
