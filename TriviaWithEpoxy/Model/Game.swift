@@ -34,7 +34,7 @@ struct Game {
     
     private let gameInfo: GameInfo
     private var score: Int
-    private var currentStep: Int
+    var currentStep: Int
     let questionsAndAnswers: QuestionsAndAnswers
     var possibleAnswers: [String]
     

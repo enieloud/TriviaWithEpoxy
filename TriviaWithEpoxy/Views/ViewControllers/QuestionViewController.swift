@@ -14,12 +14,18 @@ class QuestionViewController: CollectionViewController {
     private struct AnswerItem {
         var selected: Bool
         var text: String
-        var answerID: String
+        var answerID: Int
     }
     
-    private var state = [AnswerItem]() {
+    private struct State {
+        let possibleAnswers: [AnswerItem]
+        let currentQuestion: String
+    }
+    
+    private var state: State {
         didSet {
             setItems(items, animated: true)
+            topBarInstaller.setBars(topBars, animated: true)
         }
     }
     
@@ -27,6 +33,7 @@ class QuestionViewController: CollectionViewController {
         let layout = UICollectionViewCompositionalLayout
             .list(using: .init(appearance: .plain))
         self.game = game
+        self.state = State(possibleAnswers: [], currentQuestion: "")
         super.init(layout: layout)
         createStateFromGame()
         setItems(items, animated: false)
@@ -43,7 +50,7 @@ class QuestionViewController: CollectionViewController {
     
     @ItemModelBuilder
     var items: [ItemModeling] {
-        state.map { answerItem in
+        state.possibleAnswers.map { answerItem in
             TextRow.itemModel(
                 dataID: answerItem.answerID,
                 content: .init(title: answerItem.text, body: nil),
@@ -55,25 +62,29 @@ class QuestionViewController: CollectionViewController {
     }
     
     private func createStateFromGame() {
-        self.state = game.possibleAnswers.map {
-            AnswerItem(selected: false, text: $0, answerID: game.questionStr+$0)
+        let possibleAnswers = game.possibleAnswers.enumerated().map { (index, possibleAnswer) in
+            AnswerItem(selected: false, text: possibleAnswer, answerID: getItemID(position: index))
         }
+        state = State(possibleAnswers: possibleAnswers, currentQuestion: game.questionStr)
     }
     
-    private func selectItem(id: String) {
-        if let indexFound = state.firstIndex(where: {$0.answerID == id}) {
-            let newState = state.enumerated().map { (idx, item) in
+    private func getItemID(position: Int) -> Int {
+        return (game.currentStep+1)*100 + position
+    }
+    
+    private func selectItem(id: Int) {
+        if let indexFound = state.possibleAnswers.firstIndex(where: {$0.answerID == id}) {
+            let possibleAnswers = state.possibleAnswers.enumerated().map { (idx, item) in
                 AnswerItem(
                     selected: idx == indexFound,
                     text: item.text,
-                    answerID: item.answerID)
-            }
-            self.state = newState
+                    answerID: item.answerID) }
+            self.state = State(possibleAnswers: possibleAnswers, currentQuestion: state.currentQuestion)
         }
     }
     
     private func indexOfSelection() -> Int? {
-        state.firstIndex {item in
+        state.possibleAnswers.firstIndex { item in
             item.selected
         }
     }
@@ -96,13 +107,16 @@ class QuestionViewController: CollectionViewController {
                     } else {
                         self.showText(title: "Your answer is:", message: "incorrect answer")
                     }
+                    self.game.next()
+                    self.createStateFromGame()
                 }
             }))
     }
+    
     @BarModelBuilder
     var topBars: [BarModeling] {
         TextRow.barModel(content: TextRow.Content(title: "Game Type", body: game.description()), style: TextRow.Style.large)
-        TextRow.barModel(content: TextRow.Content(title: game.questionStr, body: "Choose your answer"), style: TextRow.Style.large)
+        TextRow.barModel(content: TextRow.Content(title: state.currentQuestion, body: "Choose your answer"), style: TextRow.Style.large)
     }
     
     func showText(title: String, message: String) {
