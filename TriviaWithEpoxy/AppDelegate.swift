@@ -15,14 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
-        readTriviaCategories() { [weak self] categs in
-            if let self = self, let categs = categs {
-                DispatchQueue.main.async {
-                    self.window?.rootViewController = InitialViewController(categories: categs)
-                    self.window?.makeKeyAndVisible()
-                }
-            }
-        }
+        self.window?.rootViewController = LoadCategoriesViewController()
+        self.window?.makeKeyAndVisible()
         return true
     }
 }
