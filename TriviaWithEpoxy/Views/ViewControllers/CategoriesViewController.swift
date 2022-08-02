@@ -9,7 +9,7 @@ import Epoxy
 import UIKit
 
 /// Source code for `EpoxyCollectionView` "Counter" example from `README.md`:
-class CategoriesViewController: CollectionViewController {
+final class CategoriesViewController: CollectionViewController {
     
     private let categories: TriviaCategories
     private let onSelect: (Int)->Void

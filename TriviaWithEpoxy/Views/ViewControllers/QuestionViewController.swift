@@ -8,8 +8,9 @@
 import Epoxy
 import UIKit
 
-class QuestionViewController: CollectionViewController {
-    var game: Game
+final class QuestionViewController: CollectionViewController {
+    var game: Game?
+    let spinner = UIActivityIndicatorView(style: .large)
     
     private struct AnswerItem {
         var selected: Bool
@@ -32,48 +33,80 @@ class QuestionViewController: CollectionViewController {
         }
     }
     
-    init(game: Game) {
+    init(gameInfo: GameInfo) {
         let layout = UICollectionViewCompositionalLayout
             .list(using: .init(appearance: .plain))
-        self.game = game
         self.state = State(possibleAnswers: [], currentQuestion: "", answerChecked: false, answerSelected: false)
         super.init(layout: layout)
-        createStateFromGame(answerChecked: false)
-        setItems(items, animated: false)
+        startSpinnerView()
+        Game.createGame(gameInfo: gameInfo) { game in
+            self.stopSpinnerView()
+            if let game = game {
+                self.game = game
+                self.onGameCreated()
+            } else {
+                self.showText(title: "Error creating game", message: "")
+            }
+        }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        topBarInstaller.install()
-        bottomBarInstaller.install()
-        if game.possibleAnswers.count == 0 {
-            self.showText(title: "Error", message: "\(game.description(short: true))\nbrought no choices!")
+    func startSpinnerView() {
+        spinner.hidesWhenStopped = true
+        view.addSubview(spinner)
+        spinner.center = view.center
+        spinner.startAnimating()
+    }
+    
+    func stopSpinnerView() {
+        DispatchQueue.main.async {
+            self.spinner.stopAnimating()
+        }
+    }
+    
+    func onGameCreated() {
+        guard let game = game else {
+            return
+        }
+        DispatchQueue.main.async {
+            if game.possibleAnswers.count == 0 {
+                self.showText(title: "Error", message: "\(game.description(short: true))\nbrought no choices!")
+            } else {
+                self.topBarInstaller.install()
+                self.bottomBarInstaller.install()
+                self.createStateFromGame(answerChecked: false)
+                self.setItems(self.items, animated: false)
+            }
         }
     }
     
     @ItemModelBuilder
     var items: [ItemModeling] {
-        if !state.answerChecked {
-            state.possibleAnswers.map { answerItem in
-                TextRow.itemModel(
-                    dataID: answerItem.answerID,
-                    content: .init(title: answerItem.text, body: nil),
-                    style: answerItem.selected ? TextRow.Style.large : TextRow.Style.small)
-                .didSelect { [weak self] context in
-                    self?.selectItem(id: answerItem.answerID)
+        if let game = game {
+            if !state.answerChecked {
+                state.possibleAnswers.map { answerItem in
+                    TextRow.itemModel(
+                        dataID: answerItem.answerID,
+                        content: .init(title: answerItem.text, body: nil),
+                        style: answerItem.selected ? TextRow.Style.large : TextRow.Style.small)
+                    .didSelect { [weak self] context in
+                        self?.selectItem(id: answerItem.answerID)
+                    }
                 }
-            }
-        } else {
-            state.possibleAnswers.enumerated().map { (index,answerItem) in
-                TextRow.itemModel(
-                    dataID: answerItem.answerID,
-                    content: .init(title: answerItem.text, body: nil),
-                    style: game.isCorrect(index: index) ? TextRow.Style.large : TextRow.Style.small)
+            } else {
+                state.possibleAnswers.enumerated().map { (index,answerItem) in
+                    TextRow.itemModel(
+                        dataID: answerItem.answerID,
+                        content: .init(title: answerItem.text, body: nil),
+                        style: game.isCorrect(index: index) ? TextRow.Style.large : TextRow.Style.small)
+                }
             }
         }
     }
     
     private func createStateFromGame(answerChecked: Bool) {
+        guard let game = game else {
+            return
+        }
         let possibleAnswers = game.possibleAnswers.enumerated().map { (index, possibleAnswer) in
             AnswerItem(selected: false, text: possibleAnswer, answerID: getItemID(position: index))
         }
@@ -81,6 +114,9 @@ class QuestionViewController: CollectionViewController {
     }
     
     private func getItemID(position: Int) -> Int {
+        guard let game = game else {
+            return 0
+        }
         return (game.currentStep+1)*100 + position
     }
     
@@ -110,33 +146,37 @@ class QuestionViewController: CollectionViewController {
     
     @BarModelBuilder
     var bottomBars: [BarModeling] {
-        ButtonRow.barModel(
-            content: .init(text: self.state.answerChecked ? "Next Question" : "Check answer!"),
-            behaviors: .init(didTap: {
-                if self.state.answerChecked {
-                    self.game.next()
-                    self.createStateFromGame(answerChecked: false)
-                } else {
-                    if !self.state.answerSelected {
-                        self.showText(title: "Please select an answer", message: "")
+        if game != nil {
+            ButtonRow.barModel(
+                content: .init(text: self.state.answerChecked ? "Next Question" : "Check answer!"),
+                behaviors: .init(didTap: {
+                    if self.state.answerChecked {
+                        self.game!.next()
+                        self.createStateFromGame(answerChecked: false)
                     } else {
-                        if let indexFound = self.indexOfSelection() {
-                            if self.game.evalAnswer(index: indexFound) {
-                                self.showText(title: "Correct answer!", message: "")
-                            } else {
-                                self.showText(title: "Oops...", message: "incorrect answer")
+                        if !self.state.answerSelected {
+                            self.showText(title: "Please select an answer", message: "")
+                        } else {
+                            if let indexFound = self.indexOfSelection() {
+                                if self.game!.evalAnswer(index: indexFound) {
+                                    self.showText(title: "Correct answer!", message: "")
+                                } else {
+                                    self.showText(title: "Oops...", message: "incorrect answer")
+                                }
+                                self.createStateFromGame(answerChecked: true)
                             }
-                            self.createStateFromGame(answerChecked: true)
                         }
                     }
-                }
-            }))
+                }))
+        }
     }
     
     @BarModelBuilder
     var topBars: [BarModeling] {
-        TextRow.barModel(content: TextRow.Content(title: game.description(), body: game.scoreStr), style: TextRow.Style.small)
-        TextRow.barModel(content: TextRow.Content(title: game.currentStepStr, body: state.currentQuestion), style: TextRow.Style.large)
+        if let game = game {
+            TextRow.barModel(content: TextRow.Content(title: game.description(), body: game.scoreStr), style: TextRow.Style.small)
+            TextRow.barModel(content: TextRow.Content(title: game.currentStepStr, body: state.currentQuestion), style: TextRow.Style.large)
+        }
     }
     
     func showText(title: String, message: String) {

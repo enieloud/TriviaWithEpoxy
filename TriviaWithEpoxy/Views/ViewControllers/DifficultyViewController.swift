@@ -8,7 +8,7 @@
 import Epoxy
 import UIKit
 
-class DifficultyViewController: CollectionViewController {
+final class DifficultyViewController: CollectionViewController {
     
     private let onSelect: (Difficulty)->Void
     

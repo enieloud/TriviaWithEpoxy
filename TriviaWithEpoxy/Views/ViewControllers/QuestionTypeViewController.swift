@@ -8,7 +8,7 @@
 import Epoxy
 import UIKit
 
-class QuestionTypeViewController: CollectionViewController {
+final class QuestionTypeViewController: CollectionViewController {
     
     private let onSelect: (QuestionType)->Void
     

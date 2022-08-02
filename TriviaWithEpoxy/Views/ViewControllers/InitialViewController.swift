@@ -8,7 +8,7 @@
 import UIKit
 import Epoxy
 
-class InitialViewController: NavigationController {
+final class InitialViewController: NavigationController {
     
     var categories: TriviaCategories
     
@@ -21,7 +21,6 @@ class InitialViewController: NavigationController {
     
     private struct State {
         var gameInfo: GameInfo
-        var game: Game?
         var page = NavPage.selectingCategory
     }
     
@@ -68,7 +67,7 @@ class InitialViewController: NavigationController {
                 dataID: NavPage.playing,
                 makeViewController: { [weak self] in
                     if let self = self {
-                        return QuestionViewController(game: self.state.game!)
+                        return QuestionViewController(gameInfo: self.state.gameInfo)
                     } else { return nil }
                 },
                 remove: { [weak self] in
@@ -94,17 +93,10 @@ class InitialViewController: NavigationController {
                 var newGameInfo = self.state.gameInfo
                 newGameInfo.type = questionType
                 newGameInfo.amount = 10
-                Game.createGame(gameInfo: newGameInfo) { game in
-                    if let game = game {
-                        var newState = self.state
-                        newState.page = .playing
-                        newState.game = game
-                        newState.gameInfo = newGameInfo
-                        DispatchQueue.main.async {
-                            self.state = newState
-                        }
-                    }
-                }
+                var newState = self.state
+                newState.page = .playing
+                newState.gameInfo = newGameInfo
+                self.state = newState
             }
         }
     }
