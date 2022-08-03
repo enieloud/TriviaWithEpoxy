@@ -27,9 +27,13 @@ func readGame(gameInfo: GameInfo, completion: @escaping (QuestionsAndAnswers?) -
         }
         do {
             let game: QuestionsAndAnswers = try JSONDecoder().decode(QuestionsAndAnswers.self, from: jsonData)
-            completion(game)
+            DispatchQueue.main.async {
+                completion(game)
+            }
         } catch {
-            completion(nil)
+            DispatchQueue.main.async {
+                completion(nil)
+            }
         }
     }
     task.resume()
