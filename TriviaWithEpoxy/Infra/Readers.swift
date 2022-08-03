@@ -16,20 +16,20 @@ struct TriviaAPIClient {
     }
     
     static func fetchCategories() -> Observable<TriviaCategories> {
-        return Observable.create { observer -> Disposable in
+        return Observable<TriviaCategories>.create { observer -> Disposable in
             AF.request("https://opentdb.com/api_category.php")
-                .validate()
-                .responseJSON { response in
+                .responseDecodable(of: TriviaCategories.self) { response in
                     switch response.result {
-                    case .success:
+                        
+                    case .success(_):
                         guard let data = response.data else {
                             // if no error provided by alamofire return unknownError error instead. Should it never happen here?
                             observer.onError(response.error ?? ApiError.unknownError)
                             return
                         }
                         do {
-                            let friends = try JSONDecoder().decode(TriviaCategories.self, from: data)
-                            observer.onNext(friends)
+                            let categories = try JSONDecoder().decode(TriviaCategories.self, from: data)
+                            observer.onNext(categories)
                         } catch {
                             observer.onError(error)
                         }

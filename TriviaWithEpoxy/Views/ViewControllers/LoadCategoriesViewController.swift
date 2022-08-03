@@ -6,11 +6,9 @@
 //
 
 import UIKit
-import RxSwift
 
 class LoadCategoriesViewController: UIViewController {
     let spinner = UIActivityIndicatorView(style: .large)
-    let disposeBag = DisposeBag()
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -19,21 +17,10 @@ class LoadCategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         startSpinnerView()
-        TriviaAPIClient.fetchCategories().subscribe { [weak self] triviaCategories in
-            DispatchQueue.main.async {
-                self?.stopSpinnerView()
-                if let self = self {
-                    let vc = TriviaRootNavigationController(categories: triviaCategories)
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
-                }
-            }
-        } onError: { [weak self] error in
-            DispatchQueue.main.async {
-                self?.stopSpinnerView()
-            }
-        }
-        .disposed(by: disposeBag)
+    }
+    
+    override func viewDidDisappear(_ : Bool) {
+        stopSpinnerView()
     }
     
     func startSpinnerView() {
