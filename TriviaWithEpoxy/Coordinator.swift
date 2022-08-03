@@ -38,7 +38,7 @@ class AppCoordinator: NSObject
     }
     
     func presentRootNavigation(categories: TriviaCategories) {
-        let vc = TriviaRootNavigationController(viewModel: model, categories: categories)
+        let vc = TriviaNavigationController(viewModel: model, categories: categories)
         window.rootViewController = vc
         window.makeKeyAndVisible()
     }

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3656181328920235009CFD8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656181228920235009CFD8D /* AppDelegate.swift */; };
 		3656181C28920237009CFD8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3656181B28920237009CFD8D /* Assets.xcassets */; };
-		3656182828920438009CFD8D /* TriviaRootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182628920438009CFD8D /* TriviaRootNavigationController.swift */; };
+		3656182828920438009CFD8D /* TriviaNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182628920438009CFD8D /* TriviaNavigationController.swift */; };
 		3656182C28920CC0009CFD8D /* TextRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182B28920CC0009CFD8D /* TextRow.swift */; };
 		3656182E28920D30009CFD8D /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182D28920D30009CFD8D /* Label.swift */; };
 		365618322892E609009CFD8D /* NavigationWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365618312892E609009CFD8D /* NavigationWrapperViewController.swift */; };
@@ -34,7 +34,7 @@
 		3656181228920235009CFD8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3656181B28920237009CFD8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3656182028920237009CFD8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3656182628920438009CFD8D /* TriviaRootNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaRootNavigationController.swift; sourceTree = "<group>"; };
+		3656182628920438009CFD8D /* TriviaNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaNavigationController.swift; sourceTree = "<group>"; };
 		3656182B28920CC0009CFD8D /* TextRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRow.swift; sourceTree = "<group>"; };
 		3656182D28920D30009CFD8D /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		365618312892E609009CFD8D /* NavigationWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationWrapperViewController.swift; sourceTree = "<group>"; };
@@ -177,7 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				365618462895B04F009CFD8D /* LoadCategoriesViewController.swift */,
-				3656182628920438009CFD8D /* TriviaRootNavigationController.swift */,
+				3656182628920438009CFD8D /* TriviaNavigationController.swift */,
 				3656184228946025009CFD8D /* CategoriesViewController.swift */,
 				3656184428946F69009CFD8D /* DifficultyViewController.swift */,
 				3656184B2895CACF009CFD8D /* QuestionTypeViewController.swift */,
@@ -319,7 +319,7 @@
 				3656183D28942E5F009CFD8D /* Readers.swift in Sources */,
 				3656184528946F69009CFD8D /* DifficultyViewController.swift in Sources */,
 				3656181328920235009CFD8D /* AppDelegate.swift in Sources */,
-				3656182828920438009CFD8D /* TriviaRootNavigationController.swift in Sources */,
+				3656182828920438009CFD8D /* TriviaNavigationController.swift in Sources */,
 				3656184E28976AA3009CFD8D /* QuestionViewController.swift in Sources */,
 				365618342892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift in Sources */,
 				365618482895B04F009CFD8D /* LoadCategoriesViewController.swift in Sources */,
