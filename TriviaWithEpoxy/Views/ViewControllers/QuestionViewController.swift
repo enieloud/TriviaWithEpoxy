@@ -7,11 +7,14 @@
 
 import Epoxy
 import UIKit
+import RxCocoa
+import RxSwift
 
 final class QuestionViewController: CollectionViewController {
     var game: Game?
     let spinner = UIActivityIndicatorView(style: .large)
-    
+    private let disposeBag = DisposeBag()
+
     private struct AnswerItem {
         var selected: Bool
         var text: String
@@ -66,21 +69,24 @@ final class QuestionViewController: CollectionViewController {
         }
     }
     
-    init(gameInfo: GameInfo) {
+    init(triviaViewModel: TriviaViewModel, gameInfo: GameInfo) {
         let layout = UICollectionViewCompositionalLayout
             .list(using: .init(appearance: .plain))
         state = State(possibleAnswers: [], currentQuestion: "", answerChecked: false, answerSelected: false, message: "")
         super.init(layout: layout)
+        subscribeToGameCreated(triviaViewModel)
         startSpinnerView()
-        Game.createGame(gameInfo: gameInfo) { game in
-            self.stopSpinnerView()
-            if let game = game {
+        triviaViewModel.createGame(gameInfo: gameInfo)
+    }
+    
+    func subscribeToGameCreated(_ triviaViewModel: TriviaViewModel) {
+        triviaViewModel.game
+            .drive(onNext: { game in
+                self.stopSpinnerView()
                 self.game = game
                 self.onGameCreated()
-            } else {
-                self.showText(title: "Error creating game", message: "")
-            }
-        }
+                 })
+            .disposed(by: disposeBag)
     }
     
     func startSpinnerView() {

@@ -22,17 +22,12 @@ struct TriviaAPIClient {
                     switch response.result {
                         
                     case .success(_):
-                        guard let data = response.data else {
+                        guard let categories = response.value else {
                             // if no error provided by alamofire return unknownError error instead. Should it never happen here?
                             observer.onError(response.error ?? ApiError.unknownError)
                             return
                         }
-                        do {
-                            let categories = try JSONDecoder().decode(TriviaCategories.self, from: data)
-                            observer.onNext(categories)
-                        } catch {
-                            observer.onError(error)
-                        }
+                        observer.onNext(categories)
                     case .failure(let error):
                         if let statusCode = response.response?.statusCode {
                             observer.onError(ApiError.httpError(statusCode))
@@ -44,36 +39,37 @@ struct TriviaAPIClient {
             return Disposables.create()
         }
     }
-}
-
-func readGame(gameInfo: GameInfo, completion: @escaping (QuestionsAndAnswers?) -> Void)
-{
-    guard let amount = gameInfo.amount,
-          let categId = gameInfo.categoryId,
-          let difficulty = gameInfo.difficulty,
-          let type = gameInfo.type
-    else {
-        completion(nil)
-        return
-    }
-    let urlStr = "https://opentdb.com/api.php?amount=\(amount)&category=\(categId)&difficulty=\(difficulty.rawValue)&type=\(type.rawValue)"
-    let url = URL(string: urlStr)!
     
-    let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-        guard let jsonData = data else {
-            completion(nil)
-            return
+    static func newGame(gameInfo: GameInfo) -> Observable<Game> {
+        if !gameInfo.isValid() {
+            return Observable<Game>.empty()
         }
-        do {
-            let game: QuestionsAndAnswers = try JSONDecoder().decode(QuestionsAndAnswers.self, from: jsonData)
-            DispatchQueue.main.async {
-                completion(game)
-            }
-        } catch {
-            DispatchQueue.main.async {
-                completion(nil)
-            }
+        return Observable<Game>.create { observer -> Disposable in
+            let amount = gameInfo.amount!
+            let categId = gameInfo.categoryId!
+            let difficulty = gameInfo.difficulty!.rawValue
+            let type = gameInfo.type!.rawValue
+            AF.request("https://opentdb.com/api.php?amount=\(amount)&category=\(categId)&difficulty=\(difficulty)&type=\(type)")
+                .responseDecodable(of: QuestionsAndAnswers.self) { response in
+                    switch response.result {
+                        
+                    case .success(_):
+                        guard let questionsAndAnswers = response.value else {
+                            // if no error provided by alamofire return unknownError error instead. Should it never happen here?
+                            observer.onError(response.error ?? ApiError.unknownError)
+                            return
+                        }
+                        let game = Game(gameInfo: gameInfo, questionsAndAnswers: questionsAndAnswers)
+                        observer.onNext(game)
+                    case .failure(let error):
+                        if let statusCode = response.response?.statusCode {
+                            observer.onError(ApiError.httpError(statusCode))
+                        } else {
+                            observer.onError(error)
+                        }
+                    }
+                }
+            return Disposables.create()
         }
     }
-    task.resume()
 }

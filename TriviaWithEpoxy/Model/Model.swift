@@ -27,6 +27,10 @@ struct TriviaCategory: Codable {
 struct QuestionsAndAnswers: Codable {
     let responseCode: Int
     let listOfQuestionsWithAnswers: [QuestionWithAnswer]
+    
+    static func empty() -> QuestionsAndAnswers {
+        QuestionsAndAnswers(responseCode: 0, listOfQuestionsWithAnswers: [])
+    }
 
     enum CodingKeys: String, CodingKey {
         case responseCode = "response_code"

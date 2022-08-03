@@ -11,6 +11,7 @@ import Epoxy
 final class TriviaRootNavigationController: NavigationController {
     
     var categories: TriviaCategories
+    let viewModel: TriviaViewModel
     
     private enum NavPage: Hashable {
         case selectingCategory
@@ -30,7 +31,8 @@ final class TriviaRootNavigationController: NavigationController {
         }
     }
     
-    init(categories: TriviaCategories) {
+    init(viewModel: TriviaViewModel, categories: TriviaCategories) {
+        self.viewModel = viewModel
         self.categories = categories
         self.state = State(gameInfo: GameInfo(categories: categories))
         super.init(wrapNavigation: NavigationWrapperViewController.init(navigationController:))
@@ -67,7 +69,7 @@ final class TriviaRootNavigationController: NavigationController {
                 dataID: NavPage.playing,
                 makeViewController: { [weak self] in
                     if let self = self {
-                        return QuestionViewController(gameInfo: self.state.gameInfo)
+                        return QuestionViewController(triviaViewModel: self.viewModel, gameInfo: self.state.gameInfo)
                     } else { return nil }
                 },
                 remove: { [weak self] in

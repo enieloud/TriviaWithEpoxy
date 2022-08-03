@@ -13,7 +13,6 @@ class AppCoordinator: NSObject
     private var window: UIWindow
     private var model = TriviaViewModel()
     private let disposeBag = DisposeBag()
-    
 
     init(window: UIWindow) {
         self.window = window
@@ -39,7 +38,7 @@ class AppCoordinator: NSObject
     }
     
     func presentRootNavigation(categories: TriviaCategories) {
-        let vc = TriviaRootNavigationController(categories: categories)
+        let vc = TriviaRootNavigationController(viewModel: model, categories: categories)
         window.rootViewController = vc
         window.makeKeyAndVisible()
     }

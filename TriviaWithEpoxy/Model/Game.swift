@@ -15,6 +15,10 @@ struct GameInfo {
     var type: QuestionType?
     var amount: Int?
     
+    func isValid() -> Bool {
+        return amount != nil && categoryId != nil && difficulty != nil && type != nil
+    }
+    
     func description(_ short: Bool) -> String {
         var categName = ""
         if let categId = categoryId {
@@ -26,6 +30,10 @@ struct GameInfo {
         }
         let questionType = type?.description() ?? ""
         return "\(categName), \(difficulty), \(questionType)"
+    }
+    
+    static func empty() -> GameInfo {
+        GameInfo(categories: TriviaCategories.empty())
     }
 }
 
@@ -48,16 +56,9 @@ struct Game {
         setupPossibleAnswers()
     }
     
-    static func createGame(gameInfo: GameInfo, completion: @escaping (Game?) -> Void) {
-        readGame(gameInfo: gameInfo) {
-            (q: QuestionsAndAnswers?) in
-            if let qa = q {
-                let game = Game(gameInfo: gameInfo, questionsAndAnswers: qa)
-                completion(game)
-            } else {
-                completion(nil)
-            }
-        }
+    static func empty() -> Game {
+        Game(gameInfo: GameInfo.empty(),
+             questionsAndAnswers: QuestionsAndAnswers.empty())
     }
     
     private mutating func setupPossibleAnswers() {
