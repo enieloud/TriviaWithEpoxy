@@ -73,6 +73,16 @@ public final class EpoxySwiftUIHostingView<RootView: View>: UIView, EpoxyableVie
 
     epoxyEnvironment.intrinsicContentSizeInvalidator = .init(invalidate: { [weak self] in
       self?.viewController.view.invalidateIntrinsicContentSize()
+
+      // Inform the enclosing collection view that the size has changed, if we're contained in one,
+      // allowing the cell to resize.
+      //
+      // On iOS 16+, we could call `invalidateIntrinsicContentSize()` on the enclosing collection
+      // view cell instead, but that currently causes visual artifacts with `MagazineLayout`. The
+      // better long term fix is likely to switch to `UIHostingConfiguration` on iOS 16+ anyways.
+      if let enclosingCollectionView = self?.superview?.superview?.superview as? UICollectionView {
+        enclosingCollectionView.collectionViewLayout.invalidateLayout()
+      }
     })
     layoutMargins = .zero
   }
@@ -129,8 +139,8 @@ public final class EpoxySwiftUIHostingView<RootView: View>: UIView, EpoxyableVie
   }
 
   public func setContent(_ content: Content, animated _: Bool) {
-    /// This triggers a change in the observed `EpoxyHostingContent` object and allows the
-    /// propagation of the SwiftUI transaction, instead of just replacing the `rootView`.
+    // This triggers a change in the observed `EpoxyHostingContent` object and allows the
+    // propagation of the SwiftUI transaction, instead of just replacing the `rootView`.
     epoxyContent.rootView = content.rootView
     dataID = content.dataID ?? DefaultDataID.noneProvided as AnyHashable
 
@@ -139,7 +149,14 @@ public final class EpoxySwiftUIHostingView<RootView: View>: UIView, EpoxyableVie
       addViewControllerIfNeeded()
     }
 
-    /// This is required to ensure that views with new content are properly resized.
+    // As of iOS 15.2, `UIHostingController` now renders updated content asynchronously, and as such
+    // this view will get sized incorrectly with the previous content when reused unless we invoke
+    // this semi-private API. We couldn't find any other method to get the view to resize
+    // synchronously after updating `rootView`, but hopefully this will become a public API soon so
+    // we can remove this call.
+    viewController._render(seconds: 0)
+
+    // This is required to ensure that views with new content are properly resized.
     viewController.view.invalidateIntrinsicContentSize()
   }
 
@@ -271,8 +288,15 @@ public final class EpoxySwiftUIHostingView<RootView: View>: UIView, EpoxyableVie
 
   private func addViewController(to parent: UIViewController) {
     viewController.willMove(toParent: parent)
+
     parent.addChild(viewController)
+
     addSubview(viewController.view)
+
+    // Get the view controller's view to be sized correctly so that we don't have to wait for
+    // autolayout to perform a pass to do so.
+    viewController.view.frame = bounds
+
     viewController.view.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       viewController.view.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -280,6 +304,7 @@ public final class EpoxySwiftUIHostingView<RootView: View>: UIView, EpoxyableVie
       viewController.view.trailingAnchor.constraint(equalTo: trailingAnchor),
       viewController.view.bottomAnchor.constraint(equalTo: bottomAnchor),
     ])
+
     viewController.didMove(toParent: parent)
   }
 
@@ -338,7 +363,7 @@ final class EpoxyHostingContent<RootView: View>: ObservableObject {
 /// `EpoxySwiftUIHostingController`, e.g. layout margins.
 final class EpoxyHostingEnvironment: ObservableObject {
   @Published var layoutMargins = EdgeInsets()
-  @Published var intrinsicContentSizeInvalidator = EpoxyIntrinsicContentSizeInvalidator(invalidate: {})
+  @Published var intrinsicContentSizeInvalidator = EpoxyIntrinsicContentSizeInvalidator(invalidate: { })
 }
 
 // MARK: - EpoxyHostingWrapper

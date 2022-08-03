@@ -1,6 +1,7 @@
 //  Created by Laura Skelton on 5/19/17.
 //  Copyright © 2017 Airbnb. All rights reserved.
 
+import EpoxyCore
 import UIKit
 
 // MARK: - CollectionViewCell
@@ -62,56 +63,60 @@ public final class CollectionViewCell: UICollectionViewCell, ItemCellView {
     -> UICollectionViewLayoutAttributes
   {
     // There's a downstream `EXC_BAD_ACCESS` crash that would indicate that `layoutAttributes` can
-    // sometimes be `null`, even though it's bridged as `nonnull`. This check guards against this.
-    guard (layoutAttributes as UICollectionViewLayoutAttributes?) != nil else {
-      return super.preferredLayoutAttributesFitting(layoutAttributes)
-    }
-
-    guard let fittingPrioritiesProvider = layoutAttributes as? FittingPrioritiesProvidingLayoutAttributes else {
-      return super.preferredLayoutAttributesFitting(layoutAttributes)
-    }
-
-    let horizontalFittingPriority = fittingPrioritiesProvider.horizontalFittingPriority
-    let verticalFittingPriority = fittingPrioritiesProvider.verticalFittingPriority
-
-    // In some cases, `contentView`'s required width and height constraints
-    // (created from its auto-resizing mask) will not have the correct constants before invoking
-    // `systemLayoutSizeFitting(...)`, causing the cell to size incorrectly. This seems to be a
-    // UIKit bug.
-    // https://openradar.appspot.com/radar?id=5025850143539200
-    // The issue seems most common when the collection view's bounds change (on rotation).
-    // We correct for this by updating `contentView.bounds`, which updates the constants used by the
-    // width and height constraints created by the `contentView`'s auto-resizing mask.
-
+    // sometimes be `null`, even though it's bridged as `nonnull`. This check serves 2 purposes:
+    // - Guarding against the case where `layoutAttributes` is `nil` (which prevents the
+    //   aforementioned crash)
+    // - Determining if we should do some custom sizing logic if our layout attributes instance
+    //   conforms to `FittingPrioritiesProvidingLayoutAttributes`
     if
-      horizontalFittingPriority == .required &&
-      contentView.bounds.width != layoutAttributes.size.width
+      let fittingPrioritiesProvider = layoutAttributes as? FittingPrioritiesProvidingLayoutAttributes
     {
-      contentView.bounds.size.width = layoutAttributes.size.width
-    }
+      let horizontalFittingPriority = fittingPrioritiesProvider.horizontalFittingPriority
+      let verticalFittingPriority = fittingPrioritiesProvider.verticalFittingPriority
 
-    if
-      verticalFittingPriority == .required &&
-      contentView.bounds.height != layoutAttributes.size.height
-    {
-      contentView.bounds.size.height = layoutAttributes.size.height
-    }
+      if #available(iOS 14, *) {
+        // Issue is fixed in iOS 14+.
+      } else {
+        // In some cases, `contentView`'s required width and height constraints
+        // (created from its auto-resizing mask) will not have the correct constants before invoking
+        // `systemLayoutSizeFitting(...)`, causing the cell to size incorrectly. This seems to be a
+        // UIKit bug.
+        // https://openradar.appspot.com/radar?id=5025850143539200
+        // The issue seems most common when the collection view's bounds change (on rotation).
+        // We correct for this by updating `contentView.bounds`, which updates the constants used by
+        // the width and height constraints created by the `contentView`'s auto-resizing mask.
+        if
+          horizontalFittingPriority == .required,
+          contentView.bounds.width != layoutAttributes.size.width
+        {
+          contentView.bounds.size.width = layoutAttributes.size.width
+        }
 
-    let size: CGSize
-    if horizontalFittingPriority != .required || verticalFittingPriority != .required {
-      // Self-sizing is required in at least one dimension.
-      size = super.systemLayoutSizeFitting(
-        layoutAttributes.size,
-        withHorizontalFittingPriority: horizontalFittingPriority,
-        verticalFittingPriority: verticalFittingPriority)
+        if
+          verticalFittingPriority == .required,
+          contentView.bounds.height != layoutAttributes.size.height
+        {
+          contentView.bounds.size.height = layoutAttributes.size.height
+        }
+      }
+
+      let size: CGSize
+      if horizontalFittingPriority != .required || verticalFittingPriority != .required {
+        // Self-sizing is required in at least one dimension.
+        size = super.systemLayoutSizeFitting(
+          layoutAttributes.size,
+          withHorizontalFittingPriority: horizontalFittingPriority,
+          verticalFittingPriority: verticalFittingPriority)
+      } else {
+        // No self-sizing is required; respect whatever size the layout determined.
+        size = layoutAttributes.size
+      }
+
+      layoutAttributes.size = size
+      return layoutAttributes
     } else {
-      // No self-sizing is required; respect whatever size the layout determined.
-      size = layoutAttributes.size
+      return super.preferredLayoutAttributesFitting(layoutAttributes)
     }
-
-    layoutAttributes.size = size
-
-    return layoutAttributes
   }
 
   public override func prepareForReuse() {

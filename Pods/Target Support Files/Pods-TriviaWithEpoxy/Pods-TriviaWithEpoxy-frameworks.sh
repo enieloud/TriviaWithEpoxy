@@ -176,6 +176,7 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Epoxy/Epoxy.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EpoxyBars/EpoxyBars.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EpoxyCollectionView/EpoxyCollectionView.framework"
@@ -183,8 +184,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/EpoxyLayoutGroups/EpoxyLayoutGroups.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EpoxyNavigationController/EpoxyNavigationController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EpoxyPresentations/EpoxyPresentations.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Epoxy/Epoxy.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EpoxyBars/EpoxyBars.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EpoxyCollectionView/EpoxyCollectionView.framework"
@@ -192,6 +197,9 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/EpoxyLayoutGroups/EpoxyLayoutGroups.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EpoxyNavigationController/EpoxyNavigationController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/EpoxyPresentations/EpoxyPresentations.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

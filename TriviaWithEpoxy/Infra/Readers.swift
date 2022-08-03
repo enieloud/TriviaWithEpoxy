@@ -6,6 +6,45 @@
 //
 
 import Foundation
+import RxSwift
+import Alamofire
+struct TriviaAPIClient {
+    
+    enum ApiError: Error {
+        case unknownError
+        case httpError(Int)
+    }
+    
+    static func fetchCategories() -> Observable<TriviaCategories> {
+        return Observable.create { observer -> Disposable in
+            AF.request("https://opentdb.com/api_category.php")
+                .validate()
+                .responseJSON { response in
+                    switch response.result {
+                    case .success:
+                        guard let data = response.data else {
+                            // if no error provided by alamofire return unknownError error instead. Should it never happen here?
+                            observer.onError(response.error ?? ApiError.unknownError)
+                            return
+                        }
+                        do {
+                            let friends = try JSONDecoder().decode(TriviaCategories.self, from: data)
+                            observer.onNext(friends)
+                        } catch {
+                            observer.onError(error)
+                        }
+                    case .failure(let error):
+                        if let statusCode = response.response?.statusCode {
+                            observer.onError(ApiError.httpError(statusCode))
+                        } else {
+                            observer.onError(error)
+                        }
+                    }
+                }
+            return Disposables.create()
+        }
+    }
+}
 
 func readGame(gameInfo: GameInfo, completion: @escaping (QuestionsAndAnswers?) -> Void)
 {
@@ -29,29 +68,6 @@ func readGame(gameInfo: GameInfo, completion: @escaping (QuestionsAndAnswers?) -
             let game: QuestionsAndAnswers = try JSONDecoder().decode(QuestionsAndAnswers.self, from: jsonData)
             DispatchQueue.main.async {
                 completion(game)
-            }
-        } catch {
-            DispatchQueue.main.async {
-                completion(nil)
-            }
-        }
-    }
-    task.resume()
-}
-
-func readTriviaCategories(completion: @escaping (TriviaCategories?) -> Void)
-{
-    let url = URL(string: "https://opentdb.com/api_category.php")!
-    
-    let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-        guard let jsonData = data else {
-            completion(nil)
-            return
-        }
-        do {
-            let triviaCategories = try JSONDecoder().decode(TriviaCategories.self, from: jsonData)
-            DispatchQueue.main.async {
-                completion(triviaCategories)
             }
         } catch {
             DispatchQueue.main.async {

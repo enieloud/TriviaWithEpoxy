@@ -1,28 +1,39 @@
 PODS:
-  - Epoxy (0.7.0):
-    - EpoxyBars (= 0.7.0)
-    - EpoxyCollectionView (= 0.7.0)
-    - EpoxyCore (= 0.7.0)
-    - EpoxyLayoutGroups (= 0.7.0)
-    - EpoxyNavigationController (= 0.7.0)
-    - EpoxyPresentations (= 0.7.0)
-  - EpoxyBars (0.7.0):
-    - EpoxyCore (= 0.7.0)
-  - EpoxyCollectionView (0.7.0):
-    - EpoxyCore (= 0.7.0)
-  - EpoxyCore (0.7.0)
-  - EpoxyLayoutGroups (0.7.0):
-    - EpoxyCore (= 0.7.0)
-  - EpoxyNavigationController (0.7.0):
-    - EpoxyCore (= 0.7.0)
-  - EpoxyPresentations (0.7.0):
-    - EpoxyCore (= 0.7.0)
+  - Alamofire (5.6.2)
+  - Epoxy (0.8.0):
+    - EpoxyBars (= 0.8.0)
+    - EpoxyCollectionView (= 0.8.0)
+    - EpoxyCore (= 0.8.0)
+    - EpoxyLayoutGroups (= 0.8.0)
+    - EpoxyNavigationController (= 0.8.0)
+    - EpoxyPresentations (= 0.8.0)
+  - EpoxyBars (0.8.0):
+    - EpoxyCore (= 0.8.0)
+  - EpoxyCollectionView (0.8.0):
+    - EpoxyCore (= 0.8.0)
+  - EpoxyCore (0.8.0)
+  - EpoxyLayoutGroups (0.8.0):
+    - EpoxyCore (= 0.8.0)
+  - EpoxyNavigationController (0.8.0):
+    - EpoxyCore (= 0.8.0)
+  - EpoxyPresentations (0.8.0):
+    - EpoxyCore (= 0.8.0)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
 
 DEPENDENCIES:
+  - Alamofire
   - Epoxy
+  - RxCocoa
+  - RxSwift
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - Epoxy
     - EpoxyBars
     - EpoxyCollectionView
@@ -30,16 +41,23 @@ SPEC REPOS:
     - EpoxyLayoutGroups
     - EpoxyNavigationController
     - EpoxyPresentations
+    - RxCocoa
+    - RxRelay
+    - RxSwift
 
 SPEC CHECKSUMS:
-  Epoxy: 9655ef705607d1e63074416e350fdc5e0f325501
-  EpoxyBars: 320b3834a624a137d64933a41755ce4ec7bba474
-  EpoxyCollectionView: cab2066f2e031fca89d5373078d9e7fa2c767858
-  EpoxyCore: 7478304fc707a67583fda3cb98e6e631f5e13d40
-  EpoxyLayoutGroups: 8adbddfd610fd03161253236b3826fb1aa332a11
-  EpoxyNavigationController: db7b4dc85f40008195b0a5994a2e48568e251928
-  EpoxyPresentations: c0975084c28a7d2c0eb112c6645ba49db3ec8e00
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  Epoxy: d9db634cdf05dec7b6c8db49b6baa809e92adcce
+  EpoxyBars: 884ae7421b1d6d8e24a9776f5816ed47bcf5b6eb
+  EpoxyCollectionView: 200c488ad3250a77006d6c314b6e267dbc30b3eb
+  EpoxyCore: 94d4e813f7f0d5faa9cc056b424cf55959f8b241
+  EpoxyLayoutGroups: a78a9ec1219f275d5f03536945e79bcbaab3d0d7
+  EpoxyNavigationController: cf06c71ec9c3570510ac052c241bc9238a27e1e8
+  EpoxyPresentations: e0fb4ee314ba458fd387f22bb2c06b14bc5fd78e
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
 
-PODFILE CHECKSUM: f67be69098af51484fe84bc6f1e67aecd804288a
+PODFILE CHECKSUM: 3eb26fa479c7762c59021fb8b87bf1d2b2050bb7
 
 COCOAPODS: 1.11.3

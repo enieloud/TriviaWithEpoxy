@@ -7,4 +7,8 @@ target 'TriviaWithEpoxy' do
 
   # Pods for TriviaWithEpoxy
   pod 'Epoxy'
+  pod 'Alamofire'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  
 end

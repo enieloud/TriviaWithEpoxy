@@ -77,9 +77,9 @@ final class CollectionViewScrollToItemHelper {
       y: CGFloat.greatestFiniteMagnitude)
     var numberOfAttempts = 1
     while
-      (
-        abs(collectionView.contentOffset.x - previousContentOffset.x) >= 1 ||
-          abs(collectionView.contentOffset.y - previousContentOffset.y) >= 1) &&
+
+      abs(collectionView.contentOffset.x - previousContentOffset.x) >= 1 ||
+      abs(collectionView.contentOffset.y - previousContentOffset.y) >= 1,
       numberOfAttempts <= 5
     {
       if numberOfAttempts > 1 {
@@ -133,7 +133,7 @@ final class CollectionViewScrollToItemHelper {
     let scrollToItemDisplayLink = CADisplayLink(
       target: self,
       selector: #selector(scrollToItemDisplayLinkFired))
-    if #available(iOS 15.0, *) {
+    if #available(iOS 15.1, *) {
       #if swift(>=5.5) // Proxy check for being built with the iOS 14 & below SDK, running on iOS 15.
       scrollToItemDisplayLink.preferredFrameRateRange = CAFrameRateRange(
         minimum: 80,
@@ -178,7 +178,7 @@ final class CollectionViewScrollToItemHelper {
 
     // Don't start programmatically scrolling until we have a greater-than`.zero` `bounds.size`.
     // This might happen if `scrollToItem` is called before the collection view has been laid out.
-    guard collectionView.bounds.width > 0 && collectionView.bounds.height > 0 else { return }
+    guard collectionView.bounds.width > 0, collectionView.bounds.height > 0 else { return }
 
     // Figure out which axis to use for scrolling.
     guard let scrollAxis = scrollAxis(for: collectionView) else {
@@ -189,7 +189,7 @@ final class CollectionViewScrollToItemHelper {
       return
     }
 
-    let maximumPerAnimationTickOffset = self.maximumPerAnimationTickOffset(
+    let maximumPerAnimationTickOffset = maximumPerAnimationTickOffset(
       for: scrollAxis,
       collectionView: collectionView)
 
@@ -322,7 +322,7 @@ final class CollectionViewScrollToItemHelper {
       return nil
     }
 
-    let positionRelativeToVisibleBounds = self.positionRelativeToVisibleBounds(
+    let positionRelativeToVisibleBounds = positionRelativeToVisibleBounds(
       forTargetItemIndexPath: targetIndexPath,
       collectionView: collectionView)
 
