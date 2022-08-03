@@ -11,6 +11,10 @@ struct TriviaCategories: Codable {
     enum CodingKeys: String, CodingKey {
         case triviaCategories = "trivia_categories"
     }
+    
+    static func empty() -> TriviaCategories {
+        TriviaCategories(triviaCategories: [])
+    }
 }
 
 // MARK: - TriviaCategory

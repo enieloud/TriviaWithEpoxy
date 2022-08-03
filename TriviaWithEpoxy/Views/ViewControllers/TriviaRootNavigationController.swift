@@ -8,7 +8,7 @@
 import UIKit
 import Epoxy
 
-final class InitialViewController: NavigationController {
+final class TriviaRootNavigationController: NavigationController {
     
     var categories: TriviaCategories
     

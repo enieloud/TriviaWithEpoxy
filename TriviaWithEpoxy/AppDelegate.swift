@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
-        self.window?.rootViewController = LoadCategoriesViewController()
-        self.window?.makeKeyAndVisible()
+        let coordinator = AppCoordinator(window: window!)
+        coordinator.start()
         return true
     }
 }

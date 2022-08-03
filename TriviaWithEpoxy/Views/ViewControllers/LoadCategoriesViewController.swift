@@ -23,7 +23,7 @@ class LoadCategoriesViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.stopSpinnerView()
                 if let self = self {
-                    let vc = InitialViewController(categories: triviaCategories)
+                    let vc = TriviaRootNavigationController(categories: triviaCategories)
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
                 }
