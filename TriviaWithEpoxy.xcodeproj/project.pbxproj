@@ -117,7 +117,7 @@
 		3656182A28920CAA009CFD8D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3656184128945FFF009CFD8D /* ViewControllers */,
+				3656184128945FFF009CFD8D /* Views */,
 				365618352892E854009CFD8D /* Extensions */,
 				365618302892E5F7009CFD8D /* Helpers */,
 				3656182F28920D39009CFD8D /* Elements */,
@@ -176,14 +176,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		3656184128945FFF009CFD8D /* ViewControllers */ = {
+		3656184128945FFF009CFD8D /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				3656185D289C0D3A009CFD8D /* Categories */,
 				3656185C289C0D33009CFD8D /* Game */,
 				36561859289C09CD009CFD8D /* Navigation */,
 			);
-			path = ViewControllers;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		36561859289C09CD009CFD8D /* Navigation */ = {
