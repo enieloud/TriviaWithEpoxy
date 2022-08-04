@@ -43,8 +43,8 @@ final class RootNavigationController: NavigationController {
                     guard let self = self else { return nil }
                     return DifficultyViewController(navigationViewModel: self.navigationViewModel)
                 },
-                remove: { [weak self] in
-                    print("remove de selectingDifficulty")
+                remove: { /*[weak self] in */
+                    print("selectingDifficulty removed")
                 })
         }
         if navigationViewModel.navigationState == .selectingQuestionType {
@@ -54,8 +54,8 @@ final class RootNavigationController: NavigationController {
                     guard let self = self else { return nil }
                     return QuestionTypeViewController(navigationViewModel: self.navigationViewModel)
                 },
-                remove: { [weak self] in
-                    print("remove de selectingQuestionType")
+                remove: { /*[weak self] in */
+                    print("selectingQuestionType removed")
                 })
         }
         if navigationViewModel.navigationState == .playing {
@@ -66,8 +66,8 @@ final class RootNavigationController: NavigationController {
                         return GameViewController(gameViewModel: GameViewModel(gameInfo: self.navigationViewModel.gameInfo))
                     } else { return nil }
                 },
-                remove: { [weak self] in
-                    print("remove de playing")
+                remove: { /*[weak self] in */
+                    print("playing removed")
                 })
         }
     }
