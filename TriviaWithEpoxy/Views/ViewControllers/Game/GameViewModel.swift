@@ -87,11 +87,10 @@ final class GameViewModel {
     func createGame() {
         gameIsCreatingSubject.onNext(true)
         TriviaAPIClient.newGame(gameInfo: gameInfo)
-            .subscribe(onNext: { game in
-                //TODO: use [weak self]
-                self.game = game
-                self.onGameCreated()
-                self.gameIsCreatingSubject.onNext(false)
+            .subscribe(onNext: { [weak self] game in
+                self?.game = game
+                self?.onGameCreated()
+                self?.gameIsCreatingSubject.onNext(false)
             },
         onError: { error in
             })

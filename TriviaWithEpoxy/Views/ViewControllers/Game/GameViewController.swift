@@ -29,10 +29,9 @@ final class GameViewController: CollectionViewController {
     
     func subscribeToStateChanged() {
         gameViewModel.gameStatePublisher
-            .drive(onNext: { state in
-                // TODO: Use [weak self]
-                self.gameViewState = state
-                self.updateUI()
+            .drive(onNext: { [weak self] state in
+                self?.gameViewState = state
+                self?.updateUI()
             })
             .disposed(by: disposeBag)
     }
@@ -45,12 +44,12 @@ final class GameViewController: CollectionViewController {
     
     func subscribeToGameIsCreating() {
         gameViewModel.gameIsCreatingPublisher
-            .drive(onNext: { isCreating in
+            .drive(onNext: { [weak self] isCreating in
                 if isCreating {
-                    self.startSpinnerView()
+                    self?.startSpinnerView()
                 } else {
-                    self.stopSpinnerView()
-                    self.onGameCreated()
+                    self?.stopSpinnerView()
+                    self?.onGameCreated()
                 }
             })
             .disposed(by: disposeBag)
@@ -58,9 +57,8 @@ final class GameViewController: CollectionViewController {
     
     func subscribeToShowMessage() {
         gameViewModel.showMessagePublisher
-            .drive(onNext: { message in
-                // TODO: Use [weak self]
-                self.showText(title: "Error", message: message)
+            .drive(onNext: { [weak self] message in
+                self?.showText(title: "Error", message: message)
             })
             .disposed(by: disposeBag)
     }

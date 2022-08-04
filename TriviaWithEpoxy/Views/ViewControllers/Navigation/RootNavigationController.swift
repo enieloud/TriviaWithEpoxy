@@ -13,7 +13,7 @@ final class RootNavigationController: NavigationController {
     
     let navigationViewModel: NavigationViewModel
     private let disposeBag = DisposeBag()
-
+    
     init(navigationViewModel: NavigationViewModel) {
         self.navigationViewModel = navigationViewModel
         super.init(wrapNavigation: NavigationWrapperViewController.init(navigationController:))
@@ -23,9 +23,11 @@ final class RootNavigationController: NavigationController {
     
     func subscribeToStateChanged() {
         navigationViewModel.navigationStatePublisher
-            .drive(onNext: { navigationState in
-                //TODO: Make [weak self]
-                self.setStack(self.stack, animated: true) })
+            .drive(onNext: { [weak self] navigationState in
+                if let self = self {
+                    self.setStack(self.stack, animated: true)
+                }
+            })
             .disposed(by: disposeBag)
     }
     
