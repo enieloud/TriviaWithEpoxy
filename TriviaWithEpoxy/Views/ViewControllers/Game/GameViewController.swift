@@ -86,23 +86,16 @@ final class GameViewController: CollectionViewController {
     
     @ItemModelBuilder
     var items: [ItemModeling] {
-        if let game = gameViewModel.game, let gameViewState = self.gameViewState {
-            if !gameViewState.answerChecked {
-                gameViewState.possibleAnswers.map { answerItem in
-                    TextRow.itemModel(
-                        dataID: answerItem.answerID,
-                        content: .init(title: answerItem.text, body: nil),
-                        style: answerItem.selected ? TextRow.Style.large : TextRow.Style.small)
-                    .didSelect { [weak self] context in
+        if let gameViewState = self.gameViewState {
+            gameViewState.possibleAnswers.map { answerItem in
+                TextRow.itemModel(
+                    dataID: answerItem.answerID,
+                    content: .init(title: answerItem.text, body: nil),
+                    style: answerItem.style.toRowStyle())
+                .didSelect { [weak self] context in
+                    if answerItem.enabled {
                         self?.gameViewModel.selectItem(id: answerItem.answerID)
                     }
-                }
-            } else {
-                gameViewState.possibleAnswers.enumerated().map { (index,answerItem) in
-                    TextRow.itemModel(
-                        dataID: answerItem.answerID,
-                        content: .init(title: answerItem.text, body: nil),
-                        style: game.isCorrect(index: index) ? TextRow.Style.green : TextRow.Style.red)
                 }
             }
         }
