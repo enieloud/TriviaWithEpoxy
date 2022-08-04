@@ -116,12 +116,15 @@ final class GameViewController: CollectionViewController {
         if let game = gameViewModel.game {
             if !game.isFinihed() {
                 ButtonRow.barModel(
+                    dataID: "BOTTOM_INFO_BAR",
                     content: .init(text: gameViewModel.getButtonText(game: game) ),
                     behaviors: .init(didTap: { self.gameViewModel.onBottomButtonTapped() })
                 )
             } else {
-                TextRow.barModel(content: TextRow.Content(title: nil, body: gameViewModel.getButtonText(game: game)),
-                                 style: .large)
+                TextRow.barModel(
+                    dataID: "BOTTOM_FINIDHED_BAR",
+                    content: TextRow.Content(title: nil, body: gameViewModel.getButtonText(game: game)),
+                    style: .large)
             }
         }
     }
@@ -129,8 +132,14 @@ final class GameViewController: CollectionViewController {
     @BarModelBuilder
     var topBars: [BarModeling] {
         if let game = gameViewModel.game, let gameViewState = self.gameViewState {
-            TextRow.barModel(content: TextRow.Content(title: game.description(), body: game.scoreStr), style: TextRow.Style.small)
-            TextRow.barModel(content: TextRow.Content(title: game.currentStepStr, body: gameViewState.currentQuestion), style: TextRow.Style.large)
+            TextRow.barModel(
+                dataID: "GAME_DESCRIPTION_BAR",
+                content: TextRow.Content(title: game.description(), body: game.scoreStr),
+                style: TextRow.Style.small)
+            TextRow.barModel(
+                dataID: "GAME_QUESTION_BAR",
+                content: TextRow.Content(title: game.currentStepStr, body: gameViewState.currentQuestion),
+                style: TextRow.Style.large)
         }
     }
     
