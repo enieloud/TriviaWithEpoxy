@@ -20,7 +20,7 @@
 		3656184028942EBA009CFD8D /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656183F28942EBA009CFD8D /* String+Extensions.swift */; };
 		3656184328946025009CFD8D /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184228946025009CFD8D /* CategoriesViewController.swift */; };
 		3656184528946F69009CFD8D /* DifficultyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184428946F69009CFD8D /* DifficultyViewController.swift */; };
-		365618482895B04F009CFD8D /* LoadCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365618462895B04F009CFD8D /* LoadCategoriesViewController.swift */; };
+		365618482895B04F009CFD8D /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365618462895B04F009CFD8D /* SpinnerViewController.swift */; };
 		3656184C2895CACF009CFD8D /* QuestionTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184B2895CACF009CFD8D /* QuestionTypeViewController.swift */; };
 		3656184E28976AA3009CFD8D /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184D28976AA3009CFD8D /* QuestionViewController.swift */; };
 		3656185028976B44009CFD8D /* ButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184F28976B44009CFD8D /* ButtonRow.swift */; };
@@ -47,7 +47,7 @@
 		3656183F28942EBA009CFD8D /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		3656184228946025009CFD8D /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		3656184428946F69009CFD8D /* DifficultyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyViewController.swift; sourceTree = "<group>"; };
-		365618462895B04F009CFD8D /* LoadCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadCategoriesViewController.swift; sourceTree = "<group>"; };
+		365618462895B04F009CFD8D /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		3656184B2895CACF009CFD8D /* QuestionTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTypeViewController.swift; sourceTree = "<group>"; };
 		3656184D28976AA3009CFD8D /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		3656184F28976B44009CFD8D /* ButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonRow.swift; sourceTree = "<group>"; };
@@ -210,7 +210,7 @@
 		3656185D289C0D3A009CFD8D /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				365618462895B04F009CFD8D /* LoadCategoriesViewController.swift */,
+				365618462895B04F009CFD8D /* SpinnerViewController.swift */,
 				36561855289ACFAC009CFD8D /* CategoriesViewModel.swift */,
 			);
 			path = Categories;
@@ -354,7 +354,7 @@
 				3656182828920438009CFD8D /* RootNavigationController.swift in Sources */,
 				3656184E28976AA3009CFD8D /* QuestionViewController.swift in Sources */,
 				365618342892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift in Sources */,
-				365618482895B04F009CFD8D /* LoadCategoriesViewController.swift in Sources */,
+				365618482895B04F009CFD8D /* SpinnerViewController.swift in Sources */,
 				3656185028976B44009CFD8D /* ButtonRow.swift in Sources */,
 				3656183928942DFD009CFD8D /* Game.swift in Sources */,
 			);

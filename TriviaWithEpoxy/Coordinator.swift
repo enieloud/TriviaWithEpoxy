@@ -37,7 +37,7 @@ class AppCoordinator: NSObject
     }
 
     func presentLoadingView() {
-        window.rootViewController = LoadCategoriesViewController()
+        window.rootViewController = SpinnerViewController()
         window.makeKeyAndVisible()
     }
     

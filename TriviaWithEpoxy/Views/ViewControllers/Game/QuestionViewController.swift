@@ -10,7 +10,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-final class QuestionViewController: CollectionViewController {
+final class GameViewController: CollectionViewController {
     var game: Game?
     let spinner = UIActivityIndicatorView(style: .large)
     private let disposeBag = DisposeBag()

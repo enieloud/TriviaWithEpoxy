@@ -61,7 +61,7 @@ final class RootNavigationController: NavigationController {
                 dataID: NavigationViewModel.NavigationState.playing,
                 makeViewController: { [weak self] in
                     if let self = self {
-                        return QuestionViewController(gameViewModel: GameViewModel(gameInfo: self.navigationViewModel.gameInfo))
+                        return GameViewController(gameViewModel: GameViewModel(gameInfo: self.navigationViewModel.gameInfo))
                     } else { return nil }
                 },
                 remove: { [weak self] in

@@ -1,5 +1,5 @@
 //
-//  LoadCategoriesViewController.swift
+//  SpinnerViewController.swift
 //  TriviaWithEpoxy
 //
 //  Created by Enrique Nieloud on 30/07/2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoadCategoriesViewController: UIViewController {
+class SpinnerViewController: UIViewController {
     let spinner = UIActivityIndicatorView(style: .large)
 
     init() {
