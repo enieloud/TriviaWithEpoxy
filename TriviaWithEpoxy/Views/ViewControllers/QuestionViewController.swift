@@ -21,39 +21,39 @@ final class QuestionViewController: CollectionViewController {
         var answerID: Int
     }
     
-    private struct State {
+    private struct QuestionViewState {
         let possibleAnswers: [AnswerItem]
         let currentQuestion: String
         let answerChecked: Bool
         let answerSelected: Bool
         let message: String
 
-        func with(message: String)->State {
-            State(possibleAnswers: self.possibleAnswers,
+        func with(message: String)->QuestionViewState {
+            QuestionViewState(possibleAnswers: self.possibleAnswers,
                   currentQuestion: self.currentQuestion,
                   answerChecked: self.answerChecked,
                   answerSelected: self.answerSelected,
                   message: message)
         }
         
-        func with(possibleAnswers: [AnswerItem])->State {
-            State(possibleAnswers: possibleAnswers,
+        func with(possibleAnswers: [AnswerItem])->QuestionViewState {
+            QuestionViewState(possibleAnswers: possibleAnswers,
                   currentQuestion: self.currentQuestion,
                   answerChecked: self.answerChecked,
                   answerSelected: self.answerSelected,
                   message: self.message)
         }
         
-        func with(currentQuestion: String)->State {
-            State(possibleAnswers: self.possibleAnswers,
+        func with(currentQuestion: String)->QuestionViewState {
+            QuestionViewState(possibleAnswers: self.possibleAnswers,
                   currentQuestion: currentQuestion,
                   answerChecked: self.answerChecked,
                   answerSelected: self.answerSelected,
                   message: self.message)
         }
         
-        func with(answerChecked: Bool)->State {
-            State(possibleAnswers: self.possibleAnswers,
+        func with(answerChecked: Bool)->QuestionViewState {
+            QuestionViewState(possibleAnswers: self.possibleAnswers,
                   currentQuestion: self.currentQuestion,
                   answerChecked: answerChecked,
                   answerSelected: self.answerSelected,
@@ -61,7 +61,7 @@ final class QuestionViewController: CollectionViewController {
         }
     }
     
-    private var state: State {
+    private var questionViewState: QuestionViewState {
         didSet {
             setItems(items, animated: true)
             topBarInstaller.setBars(topBars, animated: true)
@@ -72,7 +72,7 @@ final class QuestionViewController: CollectionViewController {
     init(triviaViewModel: TriviaViewModel) {
         let layout = UICollectionViewCompositionalLayout
             .list(using: .init(appearance: .plain))
-        state = State(possibleAnswers: [], currentQuestion: "", answerChecked: false, answerSelected: false, message: "")
+        questionViewState = QuestionViewState(possibleAnswers: [], currentQuestion: "", answerChecked: false, answerSelected: false, message: "")
         super.init(layout: layout)
         subscribeToGameCreated(triviaViewModel)
         startSpinnerView()
@@ -109,7 +109,7 @@ final class QuestionViewController: CollectionViewController {
         } else {
             topBarInstaller.install()
             bottomBarInstaller.install()
-            state = State(possibleAnswers: mapPossibleAnswers(from: game),
+            questionViewState = QuestionViewState(possibleAnswers: mapPossibleAnswers(from: game),
                           currentQuestion: game.questionStr,
                           answerChecked: false,
                           answerSelected: false,
@@ -121,8 +121,8 @@ final class QuestionViewController: CollectionViewController {
     @ItemModelBuilder
     var items: [ItemModeling] {
         if let game = game {
-            if !state.answerChecked {
-                state.possibleAnswers.map { answerItem in
+            if !questionViewState.answerChecked {
+                questionViewState.possibleAnswers.map { answerItem in
                     TextRow.itemModel(
                         dataID: answerItem.answerID,
                         content: .init(title: answerItem.text, body: nil),
@@ -132,7 +132,7 @@ final class QuestionViewController: CollectionViewController {
                     }
                 }
             } else {
-                state.possibleAnswers.enumerated().map { (index,answerItem) in
+                questionViewState.possibleAnswers.enumerated().map { (index,answerItem) in
                     TextRow.itemModel(
                         dataID: answerItem.answerID,
                         content: .init(title: answerItem.text, body: nil),
@@ -156,18 +156,18 @@ final class QuestionViewController: CollectionViewController {
     }
     
     private func selectItem(id: Int) {
-        if let indexFound = state.possibleAnswers.firstIndex(where: {$0.answerID == id}) {
-            let possibleAnswers = state.possibleAnswers.enumerated().map { (idx, item) in
+        if let indexFound = questionViewState.possibleAnswers.firstIndex(where: {$0.answerID == id}) {
+            let possibleAnswers = questionViewState.possibleAnswers.enumerated().map { (idx, item) in
                 AnswerItem(
                     selected: idx == indexFound,
                     text: item.text,
                     answerID: item.answerID) }
-            self.state = State(possibleAnswers: possibleAnswers, currentQuestion: state.currentQuestion, answerChecked: false, answerSelected: true, message: "")
+            self.questionViewState = QuestionViewState(possibleAnswers: possibleAnswers, currentQuestion: questionViewState.currentQuestion, answerChecked: false, answerSelected: true, message: "")
         }
     }
     
     private func indexOfSelection() -> Int? {
-        state.possibleAnswers.firstIndex { item in
+        questionViewState.possibleAnswers.firstIndex { item in
             item.selected
         }
     }
@@ -181,7 +181,7 @@ final class QuestionViewController: CollectionViewController {
     
     @BarModelBuilder
     var bottomBars: [BarModeling] {
-        Label.barModel(content: state.message, style: .style(with: .body, textAlignment: .center, color: .black))
+        Label.barModel(content: questionViewState.message, style: .style(with: .body, textAlignment: .center, color: .black))
         if let game = game {
             if !game.isFinihed() {
                 ButtonRow.barModel(
@@ -197,13 +197,13 @@ final class QuestionViewController: CollectionViewController {
     
     func getButtonText(game: Game)->String {
         if game.isFinihed() {
-            if state.answerChecked {
+            if questionViewState.answerChecked {
                 return "Game finished. Your final score is:\(game.scoreStr)"
             } else {
                 return "Check answer!"
             }
         } else {
-            if state.answerChecked {
+            if questionViewState.answerChecked {
                 return "Next Question"
             } else {
                 return "Check answer!"
@@ -218,12 +218,12 @@ final class QuestionViewController: CollectionViewController {
         }
         var message = ""
         var answerChecked = false
-        if state.answerChecked {
+        if questionViewState.answerChecked {
             if !game!.isFinihed() {
                 game!.next()
             }
         } else {
-            if !state.answerSelected {
+            if !questionViewState.answerSelected {
                 message = "Please select an answer"
             } else {
                 if let indexFound = self.indexOfSelection() {
@@ -234,7 +234,7 @@ final class QuestionViewController: CollectionViewController {
             }
         }
         // update the state
-        state = state
+        questionViewState = questionViewState
             .with(possibleAnswers: mapPossibleAnswers(from: game!))
             .with(currentQuestion: game!.questionStr)
             .with(message: message)
@@ -246,7 +246,7 @@ final class QuestionViewController: CollectionViewController {
     var topBars: [BarModeling] {
         if let game = game {
             TextRow.barModel(content: TextRow.Content(title: game.description(), body: game.scoreStr), style: TextRow.Style.small)
-            TextRow.barModel(content: TextRow.Content(title: game.currentStepStr, body: state.currentQuestion), style: TextRow.Style.large)
+            TextRow.barModel(content: TextRow.Content(title: game.currentStepStr, body: questionViewState.currentQuestion), style: TextRow.Style.large)
         }
     }
     

@@ -13,14 +13,15 @@ final class TriviaViewModel {
     private let disposeBag = DisposeBag()
     var gameInfo: GameInfo?
 // MARK: - Categories
-    private var categoriesSubject = PublishSubject<TriviaCategories>()
-    lazy var categoriesPublisher = categoriesSubject.asDriver(onErrorJustReturn: TriviaCategories.empty())
+    private var categoriesIsLoadingSubject = PublishSubject<Bool>()
+    lazy var categoriesIsLoadingPublisher = categoriesIsLoadingSubject.asDriver(onErrorJustReturn: false)
 
     func fetchCategories() {
+        self.categoriesIsLoadingSubject.onNext(true)
         TriviaAPIClient.fetchCategories()
             .subscribe(onNext: { categories in
                 self.gameInfo = GameInfo(categories: categories)
-                self.categoriesSubject.onNext(categories)
+                self.categoriesIsLoadingSubject.onNext(false)
             },
         onError: { error in
             })

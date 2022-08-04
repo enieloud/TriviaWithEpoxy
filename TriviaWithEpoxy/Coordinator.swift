@@ -21,15 +21,18 @@ class AppCoordinator: NSObject
 
     func start() {
         subscribeToModel()
-        presentLoadingView()
         triviaViewModel.fetchCategories()
     }
     
     func subscribeToModel() {
-        triviaViewModel.categoriesPublisher
-            .drive(onNext: { categories in
-                self.triviaViewModel.gameInfo = GameInfo(categories: categories)
-                self.presentRootNavigation() })
+        triviaViewModel.categoriesIsLoadingPublisher
+            .drive(onNext: { isLoading in
+                if isLoading {
+                    self.presentLoadingView()
+                } else {
+                    self.presentRootNavigation()
+                }
+                 })
             .disposed(by: disposeBag)
     }
 
