@@ -69,18 +69,18 @@ final class QuestionViewController: CollectionViewController {
         }
     }
     
-    init(triviaViewModel: TriviaViewModel) {
+    init(gameViewModel: GameViewModel) {
         let layout = UICollectionViewCompositionalLayout
             .list(using: .init(appearance: .plain))
         questionViewState = QuestionViewState(possibleAnswers: [], currentQuestion: "", answerChecked: false, answerSelected: false, message: "")
         super.init(layout: layout)
-        subscribeToGameCreated(triviaViewModel)
+        subscribeToGameCreated(gameViewModel)
         startSpinnerView()
-        triviaViewModel.createGame()
+        gameViewModel.createGame()
     }
     
-    func subscribeToGameCreated(_ triviaViewModel: TriviaViewModel) {
-        triviaViewModel.gamePublisher
+    func subscribeToGameCreated(_ gameViewModel: GameViewModel) {
+        gameViewModel.gamePublisher
             .drive(onNext: { game in
                 self.stopSpinnerView()
                 self.game = game

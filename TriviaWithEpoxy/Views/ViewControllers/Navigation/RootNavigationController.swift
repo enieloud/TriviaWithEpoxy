@@ -1,5 +1,5 @@
 //
-//  InitialViewController.swift
+//  RootNavigationController.swift
 //  TriviaWithEpoxy
 //
 //  Created by Enrique Nieloud on 27/07/2022.
@@ -9,20 +9,20 @@ import UIKit
 import Epoxy
 import RxSwift
 
-final class TriviaNavigationController: NavigationController {
+final class RootNavigationController: NavigationController {
     
-    let viewModel: TriviaViewModel
+    let navigationViewModel: NavigationViewModel
     private let disposeBag = DisposeBag()
 
-    init(viewModel: TriviaViewModel) {
-        self.viewModel = viewModel
+    init(navigationViewModel: NavigationViewModel) {
+        self.navigationViewModel = navigationViewModel
         super.init(wrapNavigation: NavigationWrapperViewController.init(navigationController:))
         subscribeToStateChanged()
         self.setStack(self.stack, animated: false)
     }
     
     func subscribeToStateChanged() {
-        viewModel.navigationStatePublisher
+        navigationViewModel.navigationStatePublisher
             .drive(onNext: { navigationState in
                 //TODO: Make [weak self]
                 self.setStack(self.stack, animated: true) })
@@ -30,38 +30,38 @@ final class TriviaNavigationController: NavigationController {
     }
     
     @NavigationModelBuilder private var stack: [NavigationModel] {
-        NavigationModel.root(dataID: TriviaViewModel.NavigationState.selectingCategory) { [weak self] in
+        NavigationModel.root(dataID: NavigationViewModel.NavigationState.selectingCategory) { [weak self] in
             guard let self = self else { return nil }
-            return CategoriesViewController(triviaViewModel: self.viewModel)
+            return CategoriesViewController(navigationViewModel: self.navigationViewModel)
         }
-        if viewModel.navigationState == .selectingDifficulty {
+        if navigationViewModel.navigationState == .selectingDifficulty {
             NavigationModel(
-                dataID: TriviaViewModel.NavigationState.selectingDifficulty,
+                dataID: NavigationViewModel.NavigationState.selectingDifficulty,
                 makeViewController: { [weak self] in
                     guard let self = self else { return nil }
-                    return DifficultyViewController(triviaViewModel: self.viewModel)
+                    return DifficultyViewController(navigationViewModel: self.navigationViewModel)
                 },
                 remove: { [weak self] in
                     print("remove de selectingDifficulty")
                 })
         }
-        if viewModel.navigationState == .selectingQuestionType {
+        if navigationViewModel.navigationState == .selectingQuestionType {
             NavigationModel(
-                dataID: TriviaViewModel.NavigationState.selectingQuestionType,
+                dataID: NavigationViewModel.NavigationState.selectingQuestionType,
                 makeViewController: { [weak self] in
                     guard let self = self else { return nil }
-                    return QuestionTypeViewController(triviaViewModel: self.viewModel)
+                    return QuestionTypeViewController(navigationViewModel: self.navigationViewModel)
                 },
                 remove: { [weak self] in
                     print("remove de selectingQuestionType")
                 })
         }
-        if viewModel.navigationState == .playing {
+        if navigationViewModel.navigationState == .playing {
             NavigationModel(
-                dataID: TriviaViewModel.NavigationState.playing,
+                dataID: NavigationViewModel.NavigationState.playing,
                 makeViewController: { [weak self] in
                     if let self = self {
-                        return QuestionViewController(triviaViewModel: self.viewModel)
+                        return QuestionViewController(gameViewModel: GameViewModel(gameInfo: self.navigationViewModel.gameInfo))
                     } else { return nil }
                 },
                 remove: { [weak self] in

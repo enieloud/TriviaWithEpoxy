@@ -11,7 +11,7 @@ import UIKit
 class AppCoordinator: NSObject
 {
     private var window: UIWindow
-    private var triviaViewModel = TriviaViewModel()
+    private var categoriesViewModel = CategoriesViewModel()
     private let disposeBag = DisposeBag()
 
     init(window: UIWindow) {
@@ -21,11 +21,11 @@ class AppCoordinator: NSObject
 
     func start() {
         subscribeToModel()
-        triviaViewModel.fetchCategories()
+        categoriesViewModel.fetchCategories()
     }
     
     func subscribeToModel() {
-        triviaViewModel.categoriesIsLoadingPublisher
+        categoriesViewModel.categoriesIsLoadingPublisher
             .drive(onNext: { isLoading in
                 if isLoading {
                     self.presentLoadingView()
@@ -42,7 +42,7 @@ class AppCoordinator: NSObject
     }
     
     func presentRootNavigation() {
-        let vc = TriviaNavigationController(viewModel: triviaViewModel)
+        let vc = RootNavigationController(navigationViewModel: NavigationViewModel(gameInfo:categoriesViewModel.gameInfo!))
         window.rootViewController = vc
         window.makeKeyAndVisible()
     }

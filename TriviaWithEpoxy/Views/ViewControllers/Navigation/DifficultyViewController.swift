@@ -10,15 +10,14 @@ import UIKit
 
 final class DifficultyViewController: CollectionViewController {
     
-    private let triviaViewModel: TriviaViewModel
+    private let navigationViewModel: NavigationViewModel
     
-    init(triviaViewModel: TriviaViewModel) {
-        self.triviaViewModel = triviaViewModel
+    init(navigationViewModel: NavigationViewModel) {
+        self.navigationViewModel = navigationViewModel
         super.init(layout: UICollectionViewCompositionalLayout.list)
         title = "Select Difficulty"
         setItems(items, animated: false)
     }
-    
     
     @ItemModelBuilder private var items: [ItemModeling] {
         Difficulty.allCases.map { difficulty in
@@ -27,7 +26,7 @@ final class DifficultyViewController: CollectionViewController {
                 content: .init(title: difficulty.description(), body: difficulty.description()),
                 style: .small)
             .didSelect { [weak self] _ in
-                self?.triviaViewModel.onDifficultySelected(difficulty: difficulty)
+                self?.navigationViewModel.onDifficultySelected(difficulty: difficulty)
             }
         }
     }

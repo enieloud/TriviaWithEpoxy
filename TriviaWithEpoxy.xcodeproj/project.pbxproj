@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3656181328920235009CFD8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656181228920235009CFD8D /* AppDelegate.swift */; };
 		3656181C28920237009CFD8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3656181B28920237009CFD8D /* Assets.xcassets */; };
-		3656182828920438009CFD8D /* TriviaNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182628920438009CFD8D /* TriviaNavigationController.swift */; };
+		3656182828920438009CFD8D /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182628920438009CFD8D /* RootNavigationController.swift */; };
 		3656182C28920CC0009CFD8D /* TextRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182B28920CC0009CFD8D /* TextRow.swift */; };
 		3656182E28920D30009CFD8D /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656182D28920D30009CFD8D /* Label.swift */; };
 		365618322892E609009CFD8D /* NavigationWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365618312892E609009CFD8D /* NavigationWrapperViewController.swift */; };
@@ -24,8 +24,10 @@
 		3656184C2895CACF009CFD8D /* QuestionTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184B2895CACF009CFD8D /* QuestionTypeViewController.swift */; };
 		3656184E28976AA3009CFD8D /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184D28976AA3009CFD8D /* QuestionViewController.swift */; };
 		3656185028976B44009CFD8D /* ButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656184F28976B44009CFD8D /* ButtonRow.swift */; };
-		36561856289ACFAC009CFD8D /* TriviaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36561855289ACFAC009CFD8D /* TriviaViewModel.swift */; };
+		36561856289ACFAC009CFD8D /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36561855289ACFAC009CFD8D /* CategoriesViewModel.swift */; };
 		36561858289AE224009CFD8D /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36561857289AE224009CFD8D /* Coordinator.swift */; };
+		3656185B289C09EB009CFD8D /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656185A289C09EB009CFD8D /* NavigationViewModel.swift */; };
+		3656185F289C0E08009CFD8D /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3656185E289C0E08009CFD8D /* GameViewModel.swift */; };
 		40BD36E63261EAA7B16AA0C4 /* Pods_TriviaWithEpoxy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,7 +36,7 @@
 		3656181228920235009CFD8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3656181B28920237009CFD8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3656182028920237009CFD8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3656182628920438009CFD8D /* TriviaNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaNavigationController.swift; sourceTree = "<group>"; };
+		3656182628920438009CFD8D /* RootNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
 		3656182B28920CC0009CFD8D /* TextRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRow.swift; sourceTree = "<group>"; };
 		3656182D28920D30009CFD8D /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		365618312892E609009CFD8D /* NavigationWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationWrapperViewController.swift; sourceTree = "<group>"; };
@@ -49,8 +51,10 @@
 		3656184B2895CACF009CFD8D /* QuestionTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTypeViewController.swift; sourceTree = "<group>"; };
 		3656184D28976AA3009CFD8D /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		3656184F28976B44009CFD8D /* ButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonRow.swift; sourceTree = "<group>"; };
-		36561855289ACFAC009CFD8D /* TriviaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaViewModel.swift; sourceTree = "<group>"; };
+		36561855289ACFAC009CFD8D /* CategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewModel.swift; sourceTree = "<group>"; };
 		36561857289AE224009CFD8D /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		3656185A289C09EB009CFD8D /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
+		3656185E289C0E08009CFD8D /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		3AB2EF69A716BD424FDFFB3E /* Pods-TriviaWithEpoxy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.debug.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.debug.xcconfig"; sourceTree = "<group>"; };
 		8F934802C9307B4361DCBFE6 /* Pods_TriviaWithEpoxy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TriviaWithEpoxy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95880F7D9A951D8892AA212C /* Pods-TriviaWithEpoxy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TriviaWithEpoxy.release.xcconfig"; path = "Target Support Files/Pods-TriviaWithEpoxy/Pods-TriviaWithEpoxy.release.xcconfig"; sourceTree = "<group>"; };
@@ -160,7 +164,6 @@
 			children = (
 				3656183828942DFD009CFD8D /* Game.swift */,
 				3656183A28942E30009CFD8D /* Model.swift */,
-				36561855289ACFAC009CFD8D /* TriviaViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -176,14 +179,41 @@
 		3656184128945FFF009CFD8D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				365618462895B04F009CFD8D /* LoadCategoriesViewController.swift */,
-				3656182628920438009CFD8D /* TriviaNavigationController.swift */,
+				3656185D289C0D3A009CFD8D /* Categories */,
+				3656185C289C0D33009CFD8D /* Game */,
+				36561859289C09CD009CFD8D /* Navigation */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		36561859289C09CD009CFD8D /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				3656185A289C09EB009CFD8D /* NavigationViewModel.swift */,
+				3656182628920438009CFD8D /* RootNavigationController.swift */,
 				3656184228946025009CFD8D /* CategoriesViewController.swift */,
 				3656184428946F69009CFD8D /* DifficultyViewController.swift */,
 				3656184B2895CACF009CFD8D /* QuestionTypeViewController.swift */,
-				3656184D28976AA3009CFD8D /* QuestionViewController.swift */,
 			);
-			path = ViewControllers;
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		3656185C289C0D33009CFD8D /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				3656184D28976AA3009CFD8D /* QuestionViewController.swift */,
+				3656185E289C0E08009CFD8D /* GameViewModel.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		3656185D289C0D3A009CFD8D /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				365618462895B04F009CFD8D /* LoadCategoriesViewController.swift */,
+				36561855289ACFAC009CFD8D /* CategoriesViewModel.swift */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		BAEA98694592B823E0A90EBF /* Frameworks */ = {
@@ -313,13 +343,15 @@
 				3656184028942EBA009CFD8D /* String+Extensions.swift in Sources */,
 				3656182C28920CC0009CFD8D /* TextRow.swift in Sources */,
 				3656182E28920D30009CFD8D /* Label.swift in Sources */,
-				36561856289ACFAC009CFD8D /* TriviaViewModel.swift in Sources */,
+				36561856289ACFAC009CFD8D /* CategoriesViewModel.swift in Sources */,
+				3656185B289C09EB009CFD8D /* NavigationViewModel.swift in Sources */,
+				3656185F289C0E08009CFD8D /* GameViewModel.swift in Sources */,
 				365618322892E609009CFD8D /* NavigationWrapperViewController.swift in Sources */,
 				36561858289AE224009CFD8D /* Coordinator.swift in Sources */,
 				3656183D28942E5F009CFD8D /* Readers.swift in Sources */,
 				3656184528946F69009CFD8D /* DifficultyViewController.swift in Sources */,
 				3656181328920235009CFD8D /* AppDelegate.swift in Sources */,
-				3656182828920438009CFD8D /* TriviaNavigationController.swift in Sources */,
+				3656182828920438009CFD8D /* RootNavigationController.swift in Sources */,
 				3656184E28976AA3009CFD8D /* QuestionViewController.swift in Sources */,
 				365618342892E83D009CFD8D /* UICollectionViewCompositionalLayout+List.swift in Sources */,
 				365618482895B04F009CFD8D /* LoadCategoriesViewController.swift in Sources */,

@@ -10,10 +10,10 @@ import UIKit
 
 final class QuestionTypeViewController: CollectionViewController {
     
-    private let triviaViewModel: TriviaViewModel
+    private let navigationViewModel: NavigationViewModel
     
-    init(triviaViewModel: TriviaViewModel) {
-        self.triviaViewModel = triviaViewModel
+    init(navigationViewModel: NavigationViewModel) {
+        self.navigationViewModel = navigationViewModel
         super.init(layout: UICollectionViewCompositionalLayout.list)
         title = "Select Question type"
         setItems(items, animated: false)
@@ -26,7 +26,7 @@ final class QuestionTypeViewController: CollectionViewController {
                 content: .init(title: questionType.description(), body: questionType.description()),
                 style: .small)
             .didSelect { [weak self] _ in
-                self?.triviaViewModel.onQuestionTypeSelected(questionType: questionType)
+                self?.navigationViewModel.onQuestionTypeSelected(questionType: questionType)
             }
         }
     }
