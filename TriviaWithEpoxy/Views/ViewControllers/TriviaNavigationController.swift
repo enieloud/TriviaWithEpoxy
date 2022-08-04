@@ -7,110 +7,66 @@
 
 import UIKit
 import Epoxy
+import RxSwift
 
 final class TriviaNavigationController: NavigationController {
     
-    var categories: TriviaCategories
     let viewModel: TriviaViewModel
-    
-    private enum NavPage: Hashable {
-        case selectingCategory
-        case selectingDifficulty
-        case selectingQuestionType
-        case playing
-    }
-    
-    private struct State {
-        var gameInfo: GameInfo
-        var page = NavPage.selectingCategory
-    }
-    
-    private var state: State {
-        didSet {
-            setStack(stack, animated: true)
-        }
-    }
-    
-    init(viewModel: TriviaViewModel, categories: TriviaCategories) {
+    private let disposeBag = DisposeBag()
+
+    init(viewModel: TriviaViewModel) {
         self.viewModel = viewModel
-        self.categories = categories
-        self.state = State(gameInfo: GameInfo(categories: categories))
         super.init(wrapNavigation: NavigationWrapperViewController.init(navigationController:))
+        subscribeToStateChanged()
         self.setStack(self.stack, animated: false)
     }
     
+    func subscribeToStateChanged() {
+        viewModel.navigationStatePublisher
+            .drive(onNext: { navigationState in
+                //TODO: Make [weak self]
+                self.setStack(self.stack, animated: true) })
+            .disposed(by: disposeBag)
+    }
+    
     @NavigationModelBuilder private var stack: [NavigationModel] {
-        NavigationModel.root(dataID: NavPage.selectingCategory) { [weak self] in
+        NavigationModel.root(dataID: TriviaViewModel.NavigationState.selectingCategory) { [weak self] in
             guard let self = self else { return nil }
-            return self.createCategoriesViewController()
+            return CategoriesViewController(triviaViewModel: self.viewModel)
         }
-        if state.page == .selectingDifficulty {
+        if viewModel.navigationState == .selectingDifficulty {
             NavigationModel(
-                dataID: NavPage.selectingDifficulty,
+                dataID: TriviaViewModel.NavigationState.selectingDifficulty,
                 makeViewController: { [weak self] in
-                    self?.createSelectDifficulty()
+                    guard let self = self else { return nil }
+                    return DifficultyViewController(triviaViewModel: self.viewModel)
                 },
                 remove: { [weak self] in
                     print("remove de selectingDifficulty")
                 })
         }
-        if state.page == .selectingQuestionType {
+        if viewModel.navigationState == .selectingQuestionType {
             NavigationModel(
-                dataID: NavPage.selectingQuestionType,
+                dataID: TriviaViewModel.NavigationState.selectingQuestionType,
                 makeViewController: { [weak self] in
-                    self?.createSelectQuestionType()
+                    guard let self = self else { return nil }
+                    return QuestionTypeViewController(triviaViewModel: self.viewModel)
                 },
                 remove: { [weak self] in
                     print("remove de selectingQuestionType")
                 })
         }
-        if state.page == .playing {
+        if viewModel.navigationState == .playing {
             NavigationModel(
-                dataID: NavPage.playing,
+                dataID: TriviaViewModel.NavigationState.playing,
                 makeViewController: { [weak self] in
                     if let self = self {
-                        return QuestionViewController(triviaViewModel: self.viewModel, gameInfo: self.state.gameInfo)
+                        return QuestionViewController(triviaViewModel: self.viewModel)
                     } else { return nil }
                 },
                 remove: { [weak self] in
                     print("remove de playing")
                 })
-        }
-    }
-    
-    private func createCategoriesViewController() -> UIViewController {
-        return CategoriesViewController(categories: categories) { [weak self] categoryId in
-            if let self = self {
-                var newState = self.state
-                newState.gameInfo.categoryId = categoryId
-                newState.page = .selectingDifficulty
-                self.state = newState
-            }
-        }
-    }
-    
-    private func createSelectQuestionType() -> UIViewController {
-        return QuestionTypeViewController() { [weak self] questionType in
-            if let self = self {
-                var newGameInfo = self.state.gameInfo
-                newGameInfo.type = questionType
-                newGameInfo.amount = 5
-                var newState = self.state
-                newState.page = .playing
-                newState.gameInfo = newGameInfo
-                self.state = newState
-            }
-        }
-    }
-    
-    private func createSelectDifficulty() -> UIViewController {
-        return DifficultyViewController() { [weak self] difficulty in
-            if let self = self {
-                var newState = self.state
-                newState.gameInfo.difficulty = difficulty
-                newState.page = .selectingQuestionType
-                self.state = newState
-            }
         }
     }
 }

@@ -10,10 +10,10 @@ import UIKit
 
 final class DifficultyViewController: CollectionViewController {
     
-    private let onSelect: (Difficulty)->Void
+    private let triviaViewModel: TriviaViewModel
     
-    init(onSelect: @escaping (Difficulty)->Void) {
-        self.onSelect = onSelect
+    init(triviaViewModel: TriviaViewModel) {
+        self.triviaViewModel = triviaViewModel
         super.init(layout: UICollectionViewCompositionalLayout.list)
         title = "Select Difficulty"
         setItems(items, animated: false)
@@ -27,7 +27,7 @@ final class DifficultyViewController: CollectionViewController {
                 content: .init(title: difficulty.description(), body: difficulty.description()),
                 style: .small)
             .didSelect { [weak self] _ in
-                self?.onSelect(difficulty)
+                self?.triviaViewModel.onDifficultySelected(difficulty: difficulty)
             }
         }
     }
