@@ -22,13 +22,17 @@ final class CategoriesViewController: CollectionViewController {
     
     @ItemModelBuilder private var items: [ItemModeling] {
         navigationViewModel.categories.triviaCategories.map { category in
-            TextRow.itemModel(
-                dataID: category.id,
-                content: .init(title: category.name, body: category.name),
-                style: .small)
-            .didSelect { [weak self] _ in
-                self?.navigationViewModel.onCategorySelected(categoryId: category.id)
-            }
+            SwiftUITextRow(title: category.nameWithoutGroup, subtitle: category.group, icons: category.possibleIcons)
+              // swiftlint:disable:next no_direct_standard_out_logs
+              .onAppear { print("Row \(category.id) appeared") }
+              // swiftlint:disable:next no_direct_standard_out_logs
+              .onDisappear { print("Row \(category.id) disappeared") }
+              .itemModel(dataID: category.id)
+              .didSelect { [weak self] _ in
+                  self?.navigationViewModel.onCategorySelected(categoryId: category.id)
+              }
         }
     }
 }
+
+

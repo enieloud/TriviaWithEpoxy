@@ -21,6 +21,33 @@ struct TriviaCategories: Codable {
 struct TriviaCategory: Codable {
     let id: Int
     let name: String
+    var possibleIcons: [String] {
+        get {
+            var nameFiltered = name.filter { $0 != ":" && $0 != "&" }
+            if let range = nameFiltered.range(of: "Entertainment") {
+                nameFiltered.removeSubrange(range)
+            }
+            let parts = nameFiltered.components(separatedBy: " ").filter { $0 != ""}
+            return parts
+        }
+    }
+    
+    var group: String {
+        get {
+            name.before(first: ":")
+        }
+    }
+    
+    var nameWithoutGroup: String {
+        get {
+            let value = name.after(first: ":")
+            if value == "" {
+                return name
+            } else {
+                return value
+            }
+        }
+    }
 }
 
 // MARK: - QuestionsAndAnswers
