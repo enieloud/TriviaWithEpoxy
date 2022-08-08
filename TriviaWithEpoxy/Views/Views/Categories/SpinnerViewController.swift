@@ -8,33 +8,36 @@
 import UIKit
 
 class SpinnerViewController: UIViewController {
-    let spinner = UIActivityIndicatorView(style: .large)
+  let spinner = UIActivityIndicatorView(style: .large)
 
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .white
-    }
-    
-    override func viewDidLoad() {
-        startSpinnerView()
-    }
-    
-    override func viewDidDisappear(_ : Bool) {
-        stopSpinnerView()
-    }
-    
-    func startSpinnerView() {
-        spinner.hidesWhenStopped = true
-        view.addSubview(spinner)
-        spinner.center = view.center
-        spinner.startAnimating()
-    }
-    
-    func stopSpinnerView() {
-        self.spinner.stopAnimating()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+  init() {
+    super.init(nibName: nil, bundle: nil)
+    view.backgroundColor = .white
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.startSpinnerView()
+  }
+
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    self.stopSpinnerView()
+  }
+
+  func startSpinnerView() {
+    self.spinner.hidesWhenStopped = true
+    view.addSubview(self.spinner)
+    self.spinner.center = view.center
+    self.spinner.startAnimating()
+  }
+
+  func stopSpinnerView() {
+    self.spinner.stopAnimating()
+  }
+
+  @available(*, unavailable)
+  required init?(coder _: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 }

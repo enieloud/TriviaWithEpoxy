@@ -8,42 +8,43 @@
 import RxSwift
 import UIKit
 
-class AppCoordinator: NSObject
-{
-    private var window: UIWindow
-    private var categoriesViewModel = CategoriesViewModel()
-    private let disposeBag = DisposeBag()
+class AppCoordinator: NSObject {
+  private var window: UIWindow
+  private var categoriesViewModel = CategoriesViewModel()
+  private let disposeBag = DisposeBag()
 
-    init(window: UIWindow) {
-        self.window = window
-        super.init()
-    }
+  init(window: UIWindow) {
+    self.window = window
+    super.init()
+  }
 
-    func start() {
-        subscribeToModel()
-        categoriesViewModel.fetchCategories()
-    }
-    
-    func subscribeToModel() {
-        categoriesViewModel.categoriesIsLoadingPublisher
-            .drive(onNext: { isLoading in
-                if isLoading {
-                    self.presentLoadingView()
-                } else {
-                    self.presentRootNavigation()
-                }
-                 })
-            .disposed(by: disposeBag)
-    }
+  func start() {
+    self.subscribeToModel()
+    self.categoriesViewModel.fetchCategories()
+  }
 
-    func presentLoadingView() {
-        window.rootViewController = SpinnerViewController()
-        window.makeKeyAndVisible()
-    }
-    
-    func presentRootNavigation() {
-        let vc = RootNavigationController(navigationViewModel: NavigationViewModel(gameInfo:categoriesViewModel.gameInfo!))
-        window.rootViewController = vc
-        window.makeKeyAndVisible()
-    }
+  func subscribeToModel() {
+    self.categoriesViewModel.categoriesIsLoadingPublisher
+      .drive(onNext: { isLoading in
+        if isLoading {
+          self.presentLoadingView()
+        } else {
+          self.presentRootNavigation()
+        }
+      })
+      .disposed(by: self.disposeBag)
+  }
+
+  func presentLoadingView() {
+    self.window.rootViewController = SpinnerViewController()
+    self.window.makeKeyAndVisible()
+  }
+
+  func presentRootNavigation() {
+    let rootNavigationController = RootNavigationController(
+      navigationViewModel: NavigationViewModel(gameInfo: categoriesViewModel.gameInfo!)
+    )
+    self.window.rootViewController = rootNavigationController
+    self.window.makeKeyAndVisible()
+  }
 }

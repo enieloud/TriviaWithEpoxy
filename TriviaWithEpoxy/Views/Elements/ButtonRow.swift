@@ -5,14 +5,14 @@ import Epoxy
 import UIKit
 
 final class ButtonRow: UIView, EpoxyableView {
-
   // MARK: Lifecycle
 
   init() {
     super.init(frame: .zero)
-    setUp()
+    self.setUp()
   }
 
+  @available(*, unavailable)
   required init?(coder _: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -28,11 +28,11 @@ final class ButtonRow: UIView, EpoxyableView {
   }
 
   func setContent(_ content: Content, animated _: Bool) {
-    text = content.text
+    self.text = content.text
   }
 
   func setBehaviors(_ behaviors: Behaviors?) {
-    didTap = behaviors?.didTap
+    self.didTap = behaviors?.didTap
   }
 
   // MARK: Private
@@ -41,8 +41,8 @@ final class ButtonRow: UIView, EpoxyableView {
   private var didTap: (() -> Void)?
 
   private var text: String? {
-    get { button.title(for: .normal) }
-    set { button.setTitle(newValue, for: .normal) }
+    get { self.button.title(for: .normal) }
+    set { self.button.setTitle(newValue, for: .normal) }
   }
 
   private func setUp() {
@@ -50,24 +50,23 @@ final class ButtonRow: UIView, EpoxyableView {
     layoutMargins = UIEdgeInsets(top: 20, left: 24, bottom: 20, right: 24)
     backgroundColor = .quaternarySystemFill
 
-    button.tintColor = .systemBlue
-    button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
-    button.translatesAutoresizingMaskIntoConstraints = false
+    self.button.tintColor = .systemBlue
+    self.button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
+    self.button.translatesAutoresizingMaskIntoConstraints = false
 
-    addSubview(button)
+    addSubview(self.button)
     NSLayoutConstraint.activate([
-      button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-      button.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
-      button.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-      button.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
+      self.button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+      self.button.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
+      self.button.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+      self.button.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor)
     ])
 
-    button.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
+    self.button.addTarget(self, action: #selector(self.handleTap), for: .touchUpInside)
   }
 
   @objc
   private func handleTap() {
-    didTap?()
+    self.didTap?()
   }
-
 }

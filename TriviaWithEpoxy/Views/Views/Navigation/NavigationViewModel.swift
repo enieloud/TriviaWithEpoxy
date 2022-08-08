@@ -6,48 +6,47 @@
 //
 
 import Foundation
-import RxSwift
 import RxCocoa
+import RxSwift
 
 final class NavigationViewModel {
-    enum NavigationState: Hashable {
-        case selectingCategory
-        case selectingDifficulty
-        case selectingQuestionType
-        case playing
-    }
-    
-    var navigationState: NavigationState = NavigationState.selectingCategory
-    private var navigationStateSubject = PublishSubject<NavigationState>()
-    lazy var navigationStatePublisher = navigationStateSubject.asDriver(onErrorJustReturn: NavigationState.selectingCategory)
-    var gameInfo: GameInfo
+  enum NavigationState: Hashable {
+    case selectingCategory
+    case selectingDifficulty
+    case selectingQuestionType
+    case playing
+  }
 
-    var categories: TriviaCategories {
-        get {
-            gameInfo.categories
-        }
-    }
-    
-    init(gameInfo: GameInfo) {
-        self.gameInfo = gameInfo
-    }
+  var navigationState: NavigationState = .selectingCategory
+  private var navigationStateSubject = PublishSubject<NavigationState>()
+  lazy var navigationStatePublisher = navigationStateSubject
+    .asDriver(onErrorJustReturn: NavigationState.selectingCategory)
+  var gameInfo: GameInfo
 
-    func onCategorySelected(categoryId: Int) {
-        gameInfo.categoryId = categoryId
-        navigationState = .selectingDifficulty
-        navigationStateSubject.onNext(navigationState)
-    }
+  var categories: TriviaCategories {
+    self.gameInfo.categories
+  }
 
-    func onQuestionTypeSelected(questionType: QuestionType) {
-        gameInfo.type = questionType
-        gameInfo.amount = 5
-        navigationState = .playing
-        navigationStateSubject.onNext(navigationState)
-    }
-    
-    func onDifficultySelected(difficulty: Difficulty) {
-        gameInfo.difficulty = difficulty
-        navigationState = .selectingQuestionType
-        navigationStateSubject.onNext(navigationState)
-    }
+  init(gameInfo: GameInfo) {
+    self.gameInfo = gameInfo
+  }
+
+  func onCategorySelected(categoryId: Int) {
+    self.gameInfo.categoryId = categoryId
+    self.navigationState = .selectingDifficulty
+    self.navigationStateSubject.onNext(self.navigationState)
+  }
+
+  func onQuestionTypeSelected(questionType: QuestionType) {
+    self.gameInfo.type = questionType
+    self.gameInfo.amount = 5
+    self.navigationState = .playing
+    self.navigationStateSubject.onNext(self.navigationState)
+  }
+
+  func onDifficultySelected(difficulty: Difficulty) {
+    self.gameInfo.difficulty = difficulty
+    self.navigationState = .selectingQuestionType
+    self.navigationStateSubject.onNext(self.navigationState)
+  }
 }

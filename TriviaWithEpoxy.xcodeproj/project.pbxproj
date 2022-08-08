@@ -243,6 +243,7 @@
 			buildConfigurationList = 3656182328920237009CFD8D /* Build configuration list for PBXNativeTarget "TriviaWithEpoxy" */;
 			buildPhases = (
 				42E27F81ACBE05C1725EB952 /* [CP] Check Pods Manifest.lock */,
+				3614E40A289F23AD0024D001 /* ShellScript */,
 				3656180B28920235009CFD8D /* Sources */,
 				3656180C28920235009CFD8D /* Frameworks */,
 				3656180D28920235009CFD8D /* Resources */,
@@ -302,6 +303,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3614E40A289F23AD0024D001 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" --disable strongOutlets \"$SRCROOT\"\n\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		42E27F81ACBE05C1725EB952 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

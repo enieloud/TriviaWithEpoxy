@@ -10,5 +10,6 @@ target 'TriviaWithEpoxy' do
   pod 'Alamofire'
   pod 'RxSwift'
   pod 'RxCocoa'
-  
+  pod 'SwiftLint'
+  pod 'SwiftFormat/CLI'
 end
